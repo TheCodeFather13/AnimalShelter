@@ -1,0 +1,58 @@
+﻿@using AnimalShelter
+@using UseCases.DataAnimalsPluginInterfaces
+@inject IAnimalRepository AnimalRepository
+
+
+    <div class="myFlexClass">   
+        <img class="img" src="css/Images/logo.jpg"/>      
+
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon Border"></span>
+        </button>
+        
+     <NavLink class="nav-link Border" href="" Match="NavLinkMatch.All">
+          <span aria-hidden="true"></span>Главная
+     </NavLink>
+
+     <NavLink class="nav-link Border" href="">           
+           <span>Добавить объявление</span>            
+     </NavLink>
+
+      <NavLink class="nav-link Border" href="">         
+           <span>Найти друга</span>         
+     </NavLink>         
+   </div>
+
+   <div class="container mt-3">
+       @foreach(var animal in Animals)
+    {
+        @animal.AnimalId
+        @animal.Name
+        @animal.Gender
+        @animal.Age
+           <div class="col-md-3 mb-2">
+           <img class="imgForAnimals" src="@animal.ImagePath"/>
+            <p type="hidden"></p>  
+           </div>
+        
+    }
+</div>
+
+@code {
+    private IEnumerable<Animal> Animals { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Animals = AnimalRepository.GetAnimals();
+        base.OnInitialized();
+    }
+
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
