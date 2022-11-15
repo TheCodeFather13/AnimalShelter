@@ -1,0 +1,66 @@
+﻿@page "/cats"
+@using AnimalShelter
+@using AnimalShelterCore
+@using Plugins.DataAnimals.Sql.Repositories.Repositories
+@using UseCases.DataAnimalsPluginInterfaces
+
+@inject IAnimalRepository AnimalRepository
+@inject NavigationManager NavigationManager
+
+
+
+<PageTitle>Cats</PageTitle> 
+    
+@*    <br />
+    <br />
+    <br />
+    <br />
+<button type="button" @onclick="OnRetryToMainPage" class="btn btn-primary">Назад</button>*@
+    
+   
+@if(animals != null)
+{
+    <br />
+    <br />
+    <br />
+    <br />
+           @foreach(var animal in animals)
+            {
+               <div class="col-md-3 mb-2">
+                   <div class="card">
+                        <img src="@animal.ImagePath" />
+                   </div>
+
+                   <h2>Имя: @animal.Name</h2>
+                   <h3>Возраст: @animal.Age</h3>
+                   <h4>Пол: @animal.Gender</h4>
+               </div>
+                    
+                    
+            } 
+}
+else
+{
+    <SpinnerComponent></SpinnerComponent>
+}
+
+
+
+
+@code {
+    private IEnumerable<Animal>? animals;
+    private IEnumerable<Category>? categories;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        animals = AnimalRepository.GetAnimals();
+
+    }
+
+    private void OnRetryToMainPage()
+    {
+        NavigationManager.NavigateTo("/dogs");
+    }
+
+}

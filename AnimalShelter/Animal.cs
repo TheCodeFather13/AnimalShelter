@@ -16,8 +16,7 @@ namespace AnimalShelter
         [Required]
         public string Gender { get; set; }
         public string Age { get; set; }
-
-        [Required]
+      
         public DateTime DayOfPublication { get; set; }
 
         [Required]

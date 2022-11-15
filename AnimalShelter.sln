@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.DataAnimals.Sql.Rep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseCases", "UseCases\UseCases.csproj", "{D2F1C1F6-A303-4A4D-ABB9-9806ED8E69A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalShelterWebApp", "AnimalShelterWebApp\AnimalShelterWebApp.csproj", "{D8D6EA50-D2A2-4C8B-AFCC-977A02F1DFC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimalWebApp", "AnimalWebApp\AnimalWebApp.csproj", "{FB1BBF3E-0E39-4504-9BB7-96F0D402ED0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{D2F1C1F6-A303-4A4D-ABB9-9806ED8E69A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2F1C1F6-A303-4A4D-ABB9-9806ED8E69A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2F1C1F6-A303-4A4D-ABB9-9806ED8E69A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8D6EA50-D2A2-4C8B-AFCC-977A02F1DFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8D6EA50-D2A2-4C8B-AFCC-977A02F1DFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8D6EA50-D2A2-4C8B-AFCC-977A02F1DFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8D6EA50-D2A2-4C8B-AFCC-977A02F1DFC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB1BBF3E-0E39-4504-9BB7-96F0D402ED0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB1BBF3E-0E39-4504-9BB7-96F0D402ED0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB1BBF3E-0E39-4504-9BB7-96F0D402ED0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB1BBF3E-0E39-4504-9BB7-96F0D402ED0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
