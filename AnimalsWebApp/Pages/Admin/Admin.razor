@@ -17,14 +17,13 @@
 }
 else
 {
-      <div class="input-group col">
+      <div class="input-group col buttons">
         <p class="buttons">
             <button type="button" class="btn btn-success" @onclick="OnAddAnimal">Добавить животное</button>         
         </p>
 
         <p class="buttons">
-            <input type="text" class="form-control" placeholder="Искать животное по имени"
-            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+            <input type="text" size="23" class="form-control" placeholder="Искать животное по имени" @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
             @if(SearchString.Length > 0)
             {
                 <div class="input-group-append">
@@ -35,20 +34,20 @@ else
             }
         </p>
     </div>
-    <table class="table">
-        <thead class="buttons">
+    <table class="table smartTable">
+        <thead>
             <tr>
-                <th>Фотография</th>
+                <th>Фото</th>
                 <th>Категория</th>             
                 <th>Имя</th>
                 <th>Пол</th>
                 <th>Возраст</th>
-                <th>День публикации</th>
+                <th>День издания</th>
                 <th>Контакты</th>
                 <th>Действия</th>
             </tr>
         </thead>
-        <tbody class="buttons">
+        <tbody>
             @foreach (var animal in animals)
             {
                 <tr>
