@@ -17,35 +17,48 @@
 }
 else
 {
-      <div class="header">
-        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-            <button type="button" class="btn btn-success" @onclick="OnAddAnimal">Добавить животное</button>
-            <button class="btn btn-danger" @onclick="OnCancel">Назад</button>
+      <div class="input-group col">
+        <p class="buttons">
+            <button type="button" class="btn btn-success" @onclick="OnAddAnimal">Добавить животное</button>         
+        </p>
+
+        <p class="buttons">
+            <input type="text" class="form-control" placeholder="Искать животное по имени"
+            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+            @if(SearchString.Length > 0)
+            {
+                <div class="input-group-append">
+                    <button class="btn btn-danger" @onclick="ResetSearch">
+                        <i class="fas fa-times">Отменить поиск</i>
+                    </button>
+                </div>
+            }
         </p>
     </div>
     <table class="table">
-        <thead>
-            <tr>              
+        <thead class="buttons">
+            <tr>
+                <th>Фотография</th>
                 <th>Категория</th>             
                 <th>Имя</th>
                 <th>Пол</th>
                 <th>Возраст</th>
                 <th>День публикации</th>
                 <th>Контакты</th>
-                <th>Фотография</th>
+                <th>Действия</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="buttons">
             @foreach (var animal in animals)
             {
                 <tr>
+                    <td><img src="@animal.ImagePath" alt="" class="imgForAnimals" /></td>
                     <td>@GetCategoryByIdUseCase.Execute(animal.AnimalId)?.Name</td>
                     <td>@animal.Name</td>
                     <td>@animal.Gender</td>
                     <td>@animal.Age</td>
                     <td>@animal.DayOfPublication</td>
-                    <td>@animal.Contacts</td>
-                    <td><img src="@animal.ImagePath" alt="" class="imgForAnimals" /></td>
+                    <td>@animal.Contacts</td>                  
                     <td>
                         <button class="btn btn-danger" @onclick="@(() => OnDeleteAnimal(animal.AnimalId))">Удалить</button>
                         <button class="btn btn-info" @onclick="@(() => OnEditAnimal(animal))">Редактировать</button>
@@ -58,6 +71,22 @@ else
 
 @code {
     private IEnumerable<Animal> animals;
+    protected List<Animal> searchAnimalData = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected void FilterUser()
+    {
+        if(!string.IsNullOrEmpty(SearchString))
+        {
+            animals = searchAnimalData.Where(x => x.Name.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        animals = searchAnimalData;
+    }
 
     private void OnEditAnimal(Animal animal)
     {
@@ -73,6 +102,7 @@ else
     {
         base.OnInitialized();
         animals = ViewAnimalsUseCase.Execute();
+        searchAnimalData = animals.ToList();
     }
 
     private void OnDeleteAnimal(int animalId)
