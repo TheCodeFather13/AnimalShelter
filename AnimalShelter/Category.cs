@@ -12,7 +12,6 @@ namespace AnimalShelterCore
     {
         public int CategoryId { get; set; }
 
-        [Required]
         public string Name { get; set; }       
 
         public List<Animal> Animals { get; set; }

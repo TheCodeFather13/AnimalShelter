@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnimalShelter\AnimalShelterCore.csproj" />
     <ProjectReference Include="..\UseCases\UseCases.csproj" />
   </ItemGroup>
 

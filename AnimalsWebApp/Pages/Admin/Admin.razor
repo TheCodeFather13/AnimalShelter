@@ -1,0 +1,88 @@
+﻿@page "/admin"
+@using AnimalShelter;
+@using UseCases.AnimalUseCasesInterfaces;
+@using UseCases.UseCasesInterfaces;
+
+@inject NavigationManager NavigationManager
+@inject IDeleteAnimalUseCase DeleteAnimalUseCase
+@inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
+@inject IViewAnimalsUseCase ViewAnimalsUseCase
+@inject IEditAnimalUseCase EditAnimalUseCase
+
+<PageTitle>Админ</PageTitle>
+<div class="line2"></div>
+@if (animals == null)
+{
+    <SpinnerComponent></SpinnerComponent>
+}
+else
+{
+      <div class="header">
+        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+            <button type="button" class="btn btn-success" @onclick="OnAddAnimal">Добавить животное</button>
+            <button class="btn btn-danger" @onclick="OnCancel">Назад</button>
+        </p>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>              
+                <th>Категория</th>             
+                <th>Имя</th>
+                <th>Пол</th>
+                <th>Возраст</th>
+                <th>День публикации</th>
+                <th>Контакты</th>
+                <th>Фотография</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var animal in animals)
+            {
+                <tr>
+                    <td>@GetCategoryByIdUseCase.Execute(animal.AnimalId)?.Name</td>
+                    <td>@animal.Name</td>
+                    <td>@animal.Gender</td>
+                    <td>@animal.Age</td>
+                    <td>@animal.DayOfPublication</td>
+                    <td>@animal.Contacts</td>
+                    <td><img src="@animal.ImagePath" alt="" class="imgForAnimals" /></td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="@(() => OnDeleteAnimal(animal.AnimalId))">Удалить</button>
+                        <button class="btn btn-info" @onclick="@(() => OnEditAnimal(animal))">Редактировать</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Animal> animals;
+
+    private void OnEditAnimal(Animal animal)
+    {
+        NavigationManager.NavigateTo($"/editanimal/{animal.AnimalId}");
+    }
+
+    public void OnAddAnimal()
+    {
+        NavigationManager.NavigateTo("/addanimal");
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        animals = ViewAnimalsUseCase.Execute();
+    }
+
+    private void OnDeleteAnimal(int animalId)
+    {
+        DeleteAnimalUseCase.Delete(animalId);
+        NavigationManager.NavigateTo("/admin");
+    }
+
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

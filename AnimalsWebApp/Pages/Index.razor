@@ -1,0 +1,21 @@
+﻿@page "/"
+
+@inject NavigationManager NavigationManager
+
+<div class="line">
+    <img src="css/Images/WeCanDoIt.jpg" alt="" class="center" />
+</div>
+
+@code {   
+
+  private void OnGoToAdmin()
+    {
+        NavigationManager.NavigateTo("/admin");
+    }
+}
+
+
+
+
+
+

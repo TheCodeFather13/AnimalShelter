@@ -15,13 +15,17 @@ namespace AnimalShelter
 
         [Required]
         public string Gender { get; set; }
+
+        [Required]
         public string Age { get; set; }
-      
+
+        [Required]
         public DateTime DayOfPublication { get; set; }
 
         [Required]
-        public string Contacts { get; set; }  
+        public string Contacts { get; set; }
 
+        [Required]
         public string ImagePath { get; set; }
 
         public Category Category { get; set; }

@@ -1,0 +1,74 @@
+﻿@page "/deleteanimal"
+@using AnimalShelter;
+@using UseCases.AnimalUseCasesInterfaces
+@using UseCases.UseCasesInterfaces;
+
+@inject IDeleteAnimalUseCase DeleteAnimalUseCase
+@inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
+@inject IViewAnimalsUseCase ViewAnimalsUseCase
+@inject NavigationManager NavigationManager
+
+@if(animals == null)
+{
+    <SpinnerComponent></SpinnerComponent>
+}
+else
+{
+    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+        <button class="btn btn-danger" @onclick="OnCancel">Назад</button>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <div style="margin:0 0 0 70px">
+                <th>Category</th>
+                </div>
+               
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Day of publication</th>              
+                <th>Contacts</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var animal in animals)
+            {
+                <tr>
+                    <td>@GetCategoryByIdUseCase.Execute(animal.AnimalId)?.Name</td>
+                    <td>@animal.Name</td>
+                    <td>@animal.Gender</td>
+                    <td>@animal.Age</td>
+                    <td>@animal.DayOfPublication</td>
+                    <td>@animal.Contacts</td>
+                    <td><img src="@animal.ImagePath" alt="" class="imgForAnimals" /></td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="@(() => OnDeleteAnimal(animal.AnimalId))">Удалить</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Animal> animals;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        animals = ViewAnimalsUseCase.Execute();
+    }
+
+    private void OnDeleteAnimal(int animalId)
+    {
+        DeleteAnimalUseCase.Delete(animalId);
+        NavigationManager.NavigateTo("/admin");
+    }
+
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/admin");
+    }
+}

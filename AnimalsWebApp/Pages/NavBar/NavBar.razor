@@ -1,0 +1,45 @@
+﻿@page "/navbar"
+
+<link href="css/MyStyle.css" rel="stylesheet" />
+
+<nav class="navbar navbar-expand-lg navbar-toggleable-lg border-bottom box-shadow mb-3 fixed-top bc">
+    <div class="container">
+        <a class="navbar-brand text-light" asp-area="" asp-page="/Index"><img src="css/Images/MainLogo.png" class="img" alt="" /></a>
+        <div>
+            <ul class="navbar-nav">             
+
+                <li class="nav-item images">
+                    <a class="nav-link text-light" href="" Match="NavLinkMatch.All"><img src="css/Images/kitty.png" class="imgIcons" alt="" />&nbsp;Главная</a>
+                </li>
+
+                <li class="nav-item images">
+                    <a class="nav-link text-light" href="dogs"><img src="css/Images/foot.png" class="imgIcons" alt="" />&nbsp;Собаки</a>
+                </li>
+
+                <li class="nav-item images">
+                    <a class="nav-link text-light" href="cats"><img src="css/Images/foot.png" class="imgIcons" alt="" />&nbsp;Кошки</a>
+                </li>
+
+                <li class="nav-item images">
+                    <a class="nav-link text-light" href="admin"><img src="css/Images/admin.png" class="imgIcons" alt="" />&nbsp;Админ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@code{
+    bool collapseNavMenu = true;
+
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    void CollapseNavMenu()
+    {
+        collapseNavMenu = false;
+    }
+}

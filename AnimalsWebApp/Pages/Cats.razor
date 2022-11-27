@@ -1,0 +1,51 @@
+﻿@page "/cats"
+@using AnimalShelter
+@using AnimalShelterCore
+@using Plugins.DataAnimals.Sql.Repositories.Repositories
+@using UseCases.DataAnimalsPluginInterfaces
+
+@inject IAnimalRepository AnimalRepository
+@inject ICategoryRepository CategoryRepository
+@inject NavigationManager NavigationManager
+
+<PageTitle>Категория кошки</PageTitle> 
+<div class="line"></div>    
+
+@if(animals != null)
+{ 
+    <div class="flexForImg">
+         @foreach(var animal in animals)
+            { 
+                @if(animal.CategoryId == 1)
+              {                                   
+                   <div class="flexForImg2">
+                        <img src="@animal.ImagePath" class="imgForAnimals"/>
+                        
+                      <div class="containerForAnimalsDescription">
+                        <h4>Имя: @animal.Name</h4>
+                        <h5>Возраст: @animal.Age</h5>
+                        <h6>Пол: @animal.Gender</h6>
+                        <h7>ID: @animal.AnimalId</h7>
+                      </div>
+                    </div>                             
+              } 
+    }
+    </div>  
+}
+
+
+
+@code {
+    private IEnumerable<Animal>? animals;
+    private IEnumerable<Category>? categories;
+    private Category? category;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        animals = AnimalRepository.GetAnimals();
+        category = CategoryRepository.GetCategoryById(1);
+    }
+
+   
+}
