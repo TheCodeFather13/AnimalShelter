@@ -9,6 +9,6 @@ namespace UseCases.AnimalUseCasesInterfaces
 {
     public interface IViewAnimalsUseCase
     {
-        public IEnumerable<Animal> Execute();
+        public IEnumerable<Animal> Execute();     
     }
 }

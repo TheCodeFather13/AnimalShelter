@@ -21,6 +21,6 @@ namespace UseCases.AnimalUseCase
         public IEnumerable<Animal> Execute()
         {
            return _animalRepository.GetAnimals();
-        }
+        }  
     }
 }

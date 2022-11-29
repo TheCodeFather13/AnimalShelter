@@ -97,8 +97,9 @@ else
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <label for="imagePath">Вставить фотку</label>
-                                            <InputFile OnChange="OnFileChange" class="form-label"></InputFile>
-                                           
+                                           @* <InputFile OnChange="OnFileChange" class="form-label"></InputFile>*@
+
+                                            <input type="text" onchange="onfilechange" class="form-label" />                                          
                                         </div>
                                     </div>
 
@@ -168,7 +169,6 @@ else
     {
         var imageData = $"css/Images/" + e.File.Name;        
         animal.ImagePath = imageData;
-
     }
    
 

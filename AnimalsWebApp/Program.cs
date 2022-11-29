@@ -1,3 +1,6 @@
+using Blazorise;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +38,12 @@ builder.Services.AddTransient<IViewAnimalsUseCase, ViewAnimalsUseCase>();
 builder.Services.AddTransient<IDeleteAnimalUseCase, DeleteAnimalUseCase>();
 builder.Services.AddTransient<IEditAnimalUseCase, EditAnimalUseCase>();
 builder.Services.AddTransient<IGetAnimalByIdUseCase, GetAnimalByIdUseCase>();
+
+
+// Register Blazorise.Bootstrap, fontawesome
+builder.Services.AddBlazorise(options => { options.Immediate = true; })
+    .AddBootstrap5Providers()
+    .AddFontAwesomeIcons();
 
 var app = builder.Build();
 

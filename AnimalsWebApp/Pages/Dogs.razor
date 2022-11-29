@@ -15,19 +15,20 @@
     <div class="flexForImg">
          @foreach(var animal in animals)
             { 
-                @if(animal.CategoryId == 2)
+               @* @if(animal.CategoryId == 2)
               {                                   
-                   <div class="flexForImg2">
-                        <img src="@animal.ImagePath" class="imgForAnimals"/>
-                        
-                      <div class="containerForAnimalsDescription">
-                        <h4>Имя: @animal.Name</h4>
-                        <h5>Возраст: @animal.Age</h5>
-                        <h6>Пол: @animal.Gender</h6>
-                        <h7>ID: @animal.AnimalId</h7>
-                      </div>
-                    </div>                             
-              } 
+                                              
+              }*@
+            <div class="flexForImg2">
+                <img src="@animal.ImagePath" class="imgForAnimals" />
+
+                <div class="containerForAnimalsDescription">
+                    <h4>Имя: @animal.Name</h4>
+                    <h5>Возраст: @animal.Age</h5>
+                    <h6>Пол: @animal.Gender</h6>
+                    <h7>ID: @animal.AnimalId</h7>
+                </div>
+            </div>
     }
     </div>  
 }
@@ -40,7 +41,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        animals = AnimalRepository.GetAnimals();
         category = CategoryRepository.GetCategoryById(2);
+        animals = AnimalRepository.GetAnimalByCategoryId(2);
     }
 }

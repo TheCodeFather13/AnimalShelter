@@ -24,8 +24,7 @@ namespace AnimalShelter
 
         [Required]
         public string Contacts { get; set; }
-
-        [Required]
+      
         public string ImagePath { get; set; }
 
         public Category Category { get; set; }
