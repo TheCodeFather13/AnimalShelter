@@ -1,8 +1,6 @@
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using Plugins.DataAnimals.Sql.Repositories;
 using Plugins.DataAnimals.Sql.Repositories.Repositories;
@@ -11,6 +9,9 @@ using UseCases.AnimalUseCasesInterfaces;
 using UseCases.CategoriesUseCases;
 using UseCases.DataAnimalsPluginInterfaces;
 using UseCases.UseCasesInterfaces;
+using Microsoft.AspNetCore.Identity;
+using AnimalsWebApp.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<AnimalShelterDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<AnimalsWebAppContext>();
 
 // Dependency injection In memory data store
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
@@ -58,6 +62,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization(); 
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

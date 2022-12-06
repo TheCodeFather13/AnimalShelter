@@ -11,7 +11,7 @@
 
 
 <PageTitle>Админ</PageTitle>
-<div class="line2"></div>
+
 @if (animals == null)
 {
     <SpinnerComponent></SpinnerComponent>
@@ -35,16 +35,12 @@ else
             }
         </p>
 
-       @* <div class="dropdown-menu">
-            <p class="buttons">
-                <button class="btn btn-primary dropdown-toggle" type="button">Сортировать по</button>
-            </p>
-        </div>*@
-
-        <div class="dropdown buttons">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Сортировать по
+        <div class="dropdown">
+            
+            <button class="btn btn-secondary dropdown-toggle buttons" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                &nbsp;&nbsp;&nbsp;Сортировать по
             </button>
+            
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><button class="dropdown-item" @onclick="OnDescAlphabet" >Имени</button></li>
                 <li><button class="dropdown-item" @onclick="OnCategorySortCatsDogs">Кошки-Собаки</button></li>

@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager NavigationManager
+<link href="css/MyStyle.css" rel="stylesheet" />
+
+
+<Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+    <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+        <Authorized>        
+            <div class="bc-login">
+                <ul class="navbar-nav login-position">
+
+                    <li class="nav-item">
+                        <a href="/Identity/Account/Manage" class="btn btn-lg">Здравствуйте, @context.User.Identity.Name</a>
+                    </li>
+
+                    <li class="nav-item" style="margin-right:10px">
+                        <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+                            <button type="submit" class="btn btn-danger">Выйти из профиля</button>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+           
+                <div class="bc-login">
+                    <ul class="navbar-nav login-position">
+
+                    <li class="nav-item" style="margin:10px">
+                        <a class="btn btn-info" style="color:white;" href="Identity/Account/Register">Зарегистрироваться</a>
+                        </li>
+
+                    <li class="nav-item" style="margin:10px">
+                            <a class="btn btn-success" href="Identity/Account/Login">Войти</a>
+                        </li>
+
+                    </ul>
+                </div>         
+           
+        </NotAuthorized>
+    </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+</Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+
+
+
+
+@code {
+
+}
