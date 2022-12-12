@@ -1,5 +1,7 @@
 ﻿@page "/admin"
+@attribute [Authorize(Roles="Admin")]
 @using AnimalShelter;
+@using Microsoft.AspNetCore.Authorization;
 @using UseCases.AnimalUseCasesInterfaces;
 @using UseCases.UseCasesInterfaces;
 
@@ -8,7 +10,6 @@
 @inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
 @inject IViewAnimalsUseCase ViewAnimalsUseCase
 @inject IEditAnimalUseCase EditAnimalUseCase
-
 
 <PageTitle>Админ</PageTitle>
 
@@ -21,6 +22,10 @@ else
       <div class="input-group col buttons">
         <p class="buttons">
             <button type="button" class="btn btn-success" @onclick="OnAddAnimal">Добавить животное</button>         
+        </p>
+
+        <p class="buttons">
+            <button type="button" class="btn btn-success" @onclick="OnAddCategory">Добавить категорию</button>
         </p>
 
         <p class="buttons">
@@ -97,6 +102,11 @@ else
         {
             animals = searchAnimalData.Where(x => x.Name.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
         }
+    }
+
+    private void OnAddCategory()
+    {
+        NavigationManager.NavigateTo("addcategory");
     }
 
     public void ResetSearch()

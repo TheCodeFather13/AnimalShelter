@@ -10,8 +10,6 @@ using UseCases.CategoriesUseCases;
 using UseCases.DataAnimalsPluginInterfaces;
 using UseCases.UseCasesInterfaces;
 using Microsoft.AspNetCore.Identity;
-using AnimalsWebApp.Data;
-
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -21,6 +19,10 @@ builder.Services.AddDbContext<AnimalShelterDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+    
+builder.Services
+    .AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AnimalShelterDbContext>(); 
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<AnimalsWebAppContext>();
@@ -48,6 +50,9 @@ builder.Services.AddTransient<IGetAnimalByIdUseCase, GetAnimalByIdUseCase>();
 builder.Services.AddBlazorise(options => { options.Immediate = true; })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
+
+builder.Services.AddOptions();
+builder.Services.AddAuthorizationCore();
 
 var app = builder.Build();
 

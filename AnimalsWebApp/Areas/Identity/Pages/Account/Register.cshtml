@@ -1,48 +1,51 @@
 ﻿@page
+@using Microsoft.AspNetCore.Components;
 @model RegisterModel
-@{
-    ViewData["Title"] = "Register";
-}
+@inject NavigationManager NavigationManager
 
-<h1>@ViewData["Title"]</h1>
+
+<link rel="stylesheet" href="~/css/Login.css" />
+<div id="bg2"></div>
+
 
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Почта</label>
+            <div class="form-field">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Почта" />
+
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Пароль</label>
+            <div class="form-field">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Пароль" />
+
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Подтвердите пароль</label>
+            <div class="form-field">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Подтвердите пароль" />
+
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Зарегистрироваться</button>
+           
         </form>
+       @* <button class="btn btn-danger w-100 btn btn-lg btn-primary" @onclick="CallAlert()">Назад</button>*@
     </div>
+   
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to register.</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
+                    //<div>
+                    //    <p>
+                    //        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                    //        about setting up this ASP.NET application to support logging in via external services</a>.
+                    //    </p>
+                    //</div>
                 }
                 else
                 {
@@ -62,6 +65,15 @@
     </div>
 </div>
 
+@code{
+     private void CallAlert()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+

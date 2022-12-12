@@ -7,14 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\JS\**" />
+    <Content Remove="wwwroot\JS\**" />
+    <EmbeddedResource Remove="wwwroot\JS\**" />
+    <None Remove="wwwroot\JS\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.1.4.1" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.1.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -32,20 +37,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Plugins.DataAnimals.Sql.Repositories\Plugins.DataAnimals.Sql.Repositories.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\css\bootstrap-4.3.1\.github\CODEOWNERS" />
-    <None Include="wwwroot\css\bootstrap-4.3.1\.github\CONTRIBUTING.md" />
-    <None Include="wwwroot\css\bootstrap-4.3.1\.github\ISSUE_TEMPLATE\bug.md" />
-    <None Include="wwwroot\css\bootstrap-4.3.1\.github\ISSUE_TEMPLATE\bug_report.md" />
-    <None Include="wwwroot\css\bootstrap-4.3.1\.github\ISSUE_TEMPLATE\feature.md" />
-    <None Include="wwwroot\css\bootstrap-4.3.1\.github\ISSUE_TEMPLATE\feature_request.md" />
-    <None Include="wwwroot\css\bootstrap-4.3.1\.github\SUPPORT.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\JS\" />
   </ItemGroup>
 
 </Project>

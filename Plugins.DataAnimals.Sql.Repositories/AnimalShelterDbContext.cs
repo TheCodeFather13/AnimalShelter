@@ -1,5 +1,7 @@
 ﻿using AnimalShelter;
 using AnimalShelterCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Plugins.DataAnimals.Sql.Repositories
 {
-    public class AnimalShelterDbContext : DbContext
+    public class AnimalShelterDbContext : IdentityDbContext
     {
         public AnimalShelterDbContext(DbContextOptions options) : base(options)
         {
@@ -22,7 +24,8 @@ namespace Plugins.DataAnimals.Sql.Repositories
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
             modelBuilder.Entity<Category>()
                 .HasMany(x => x.Animals)
                 .WithOne(y => y.Category)
