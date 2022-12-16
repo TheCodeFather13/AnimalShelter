@@ -31,10 +31,12 @@
     margin: 5px 0 0 0;
 }
 
+
+
 .navFlex {
     display: flex;
     flex-direction: row;
-    justify-content:flex-end;
+    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 45px;
 }
@@ -108,7 +110,8 @@ img {
 }
 
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-
+   
+    
     table, thead, tbody, th, td, tr {
         display: block;
     }

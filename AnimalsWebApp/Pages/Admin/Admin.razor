@@ -25,7 +25,7 @@ else
         </p>
 
         <p class="buttons">
-            <button type="button" class="btn btn-success" @onclick="OnAddCategory">Добавить категорию</button>
+            <button type="button" class="btn btn-success" @onclick="OnAddCategory">Работа с категориями</button>
         </p>
 
         <p class="buttons">
@@ -106,7 +106,7 @@ else
 
     private void OnAddCategory()
     {
-        NavigationManager.NavigateTo("addcategory");
+        NavigationManager.NavigateTo("category");
     }
 
     public void ResetSearch()

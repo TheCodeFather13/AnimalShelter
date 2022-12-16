@@ -3,10 +3,8 @@
 @model RegisterModel
 @inject NavigationManager NavigationManager
 
-
 <link rel="stylesheet" href="~/css/Login.css" />
 <div id="bg2"></div>
-
 
 <div class="row">
     <div class="col-md-4">
@@ -28,12 +26,14 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Зарегистрироваться</button>
-           
-        </form>
-       @* <button class="btn btn-danger w-100 btn btn-lg btn-primary" @onclick="CallAlert()">Назад</button>*@
+
+            <div class="form-field">
+                <button id="registerSubmit" type="submit" class="btn btn-primary" >Регистрация</button>
+                <span style ="margin-left:40px;"></span><a href="/" class="btn btn-primary" role="button">Назад</a>
+            </div>                     
+        </form>      
     </div>
-   
+
     <div class="col-md-6 col-md-offset-2">
         <section>
             <hr />
@@ -64,13 +64,6 @@
         </section>
     </div>
 </div>
-
-@code{
-     private void CallAlert()
-    {
-        NavigationManager.NavigateTo("/");
-    }
-}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

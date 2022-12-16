@@ -1,10 +1,89 @@
-﻿@page "/addcategory"
+﻿@page "/category"
+@using AnimalShelter;
+@using AnimalShelterCore;
+@using Microsoft.AspNetCore.Components.Forms;
+@using UseCases.UseCasesInterfaces;
 
 @inject NavigationManager NavigationManager
+@inject IAddCategoryUseCase AddCategoryUseCase
+@inject IViewCategoriesUseCase ViewCategoriesUseCase
+@inject IDeleteCategoryUseCase DeleteCategoryUseCase
+@inject IJSRuntime JsRuntime
+
+@if (category == null)
+{
+    <SpinnerComponent></SpinnerComponent>
+}
+else
+{
+    <Microsoft.AspNetCore.Components.Forms.EditForm Model="category" OnValidSubmit="OnValidSubmit" class="mx-1 mx-md-4">
+        <Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator></Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator>
+        <Microsoft.AspNetCore.Components.Forms.ValidationSummary></Microsoft.AspNetCore.Components.Forms.ValidationSummary>
+
+        @*<label for="category">Категории</label>
+    <select id="category" @bind="animal.CategoryId">
+    <option value="0">Выберите категорию животного</option>
+    @foreach (var category in categories)
+    {
+    <option value="@category.CategoryId">@category.Name</option>
+    }
+    </select>*@
 
 
-<h3>Add Category</h3>
+        <div class="mb-3 input-group">
+            <InputText id="name" style="width: 30%;" @bind-Value="category.Name" placeholder="Введите название категории"></InputText>
+
+            <button class="btn btn-success" type="submit">Добавить категорию</button>
+
+        </div>
+    </Microsoft.AspNetCore.Components.Forms.EditForm>
+
+    <h5 style="text-align:center;background-color:#20454f;color:white;padding:20px;">Список категорий</h5>
+    <table class="table table-hover table-dark">
+        <thead>
+            @foreach (var category in categories)
+            {
+                <tr>
+                    <th>                       
+                        Название категории: @category.Name &nbsp;&nbsp;
+                        <button class="btn btn-danger" @onclick="@(() => OnDeleteCategory(category.CategoryId))">Удалить категорию</button>
+                    </th>
+                </tr>
+            }
+        </thead>
+    </table>
+}
 
 @code {
+    private Animal animal;
+    private Category category;
+    private IEnumerable<Category> categories;
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        animal = new Animal();
+        category = new Category();
+        categories = ViewCategoriesUseCase.Execute();
+    }
+
+    private void OnValidSubmit(EditContext context)
+    {
+        if (context.Validate())
+        {
+            AddCategoryUseCase.Execute(category);
+            NavigationManager.NavigateTo("/admin");
+        }
+    }
+
+    private async Task OnDeleteCategory(int categoryId)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Вы уверены?");
+
+        if (confirmed)
+        {
+            DeleteCategoryUseCase.Delete(categoryId);
+            NavigationManager.NavigateTo("/admin");
+        }
+    }
 }
