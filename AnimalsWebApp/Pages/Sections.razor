@@ -3,13 +3,20 @@
 @inject NavigationManager NavigationManager
 
 
-<h2 class="bgForOl" style="margin:20px;text-align:center;border-radius:5px;">Полезные статьи</h2>
+<h2 class="bgForOl" style="margin:10px;text-align:center;border-radius:5px;padding:8px;">Полезные статьи</h2>
 
 <div class="flexForImg">
+
     <p class="flexForImg2">
         <a class="btn btn-outline-info" @onclick="OnGoToCatTray"><span style="color:black;margin-bottom:5px;">КАК ПРИУЧИТЬ КОШКУ К ЛОТКУ</span></a>
         <br />
         <img src="/css/Images/CatSections1.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatTray" />
+    </p>
+
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToDogForChildren"><span style="color:black;margin-bottom:5px;">СОБАКА ДЛЯ ДЕТЕЙ</span></a>
+        <br />
+        <img src="/css/Images/DogForChildren.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToDogForChildren" />
     </p>
 
     <p class="flexForImg2">
@@ -21,13 +28,41 @@
     <p class="flexForImg2">
         <a class="btn btn-outline-info" @onclick="OnGoToCatIntoxication"><span style="color:black;">ОТРАВЛЕНИЕ У КОШКИ</span></a>
         <br />
-        <img src="/css/Images/CatIntoxication.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatToys" />
+        <img src="/css/Images/CatIntoxication.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatIntoxication" />
+    </p>
+
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToCatFood"><span style="color:black;">ЧЕМ КОРМИТЬ КОТЕНКА?</span>
+        </a>
+        <br />
+        <img src="/css/Images/CatFood.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatFood" />
+    </p>
+
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToCatPregnant"><span style="color:black;">БЕРЕМЕННОСТЬ КОШКИ</span></a>
+        <br />
+        <img src="/css/Images/CatPregnant.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatPregnant" />
     </p>
 
 </div>
 
 
 @code {
+
+    private void OnGoToDogForChildren()
+    {
+        NavigationManager.NavigateTo("/dogforchildren");
+    }
+
+    private void OnGoToCatPregnant()
+    {
+        NavigationManager.NavigateTo("/catpregnant");
+    }
+
+    private void OnGoToCatFood()
+    {
+        NavigationManager.NavigateTo("/catfood");
+    }
 
     private void OnGoToCatIntoxication()
     {
