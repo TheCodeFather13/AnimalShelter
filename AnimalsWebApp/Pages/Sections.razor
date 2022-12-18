@@ -1,5 +1,47 @@
-﻿<h3>Sections</h3>
+﻿@page "/sections"
+
+@inject NavigationManager NavigationManager
+
+
+<h2 class="bgForOl" style="margin:20px;text-align:center;border-radius:5px;">Полезные статьи</h2>
+
+<div class="flexForImg">
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToCatTray"><span style="color:black;margin-bottom:5px;">КАК ПРИУЧИТЬ КОШКУ К ЛОТКУ</span></a>
+        <br />
+        <img src="/css/Images/CatSections1.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatTray" />
+    </p>
+
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToCatToys"><span style="color:black;">ИГРУШКИ ДЛЯ КОШЕК: ВИДЫ, ВЫБОР</span></a>
+        <br />
+        <img src="/css/Images/CatSectionsToys.jpeg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatToys" />
+    </p>
+
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToCatIntoxication"><span style="color:black;">ОТРАВЛЕНИЕ У КОШКИ</span></a>
+        <br />
+        <img src="/css/Images/CatIntoxication.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatToys" />
+    </p>
+
+</div>
+
 
 @code {
+
+    private void OnGoToCatIntoxication()
+    {
+        NavigationManager.NavigateTo("/catintoxication");
+    }
+
+    private void OnGoToCatTray()
+    {
+        NavigationManager.NavigateTo("/cattray");
+    }
+
+    private void OnGoToCatToys()
+    {
+        NavigationManager.NavigateTo("/cattoys");
+    }
 
 }
