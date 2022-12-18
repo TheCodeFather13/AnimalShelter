@@ -1,0 +1,40 @@
+﻿
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 35px;
+}
+
+.border {
+    border-right-color: #20454f; /* Цвет линии справа */
+    border-right-style: groove; /* Стиль линии */
+    border-right-width: 10px; /* Толщина линии */
+    border-left-color: #20454f; /* Цвет линии слева */
+    border-left-style: groove; /* Стиль линии */
+    border-left-width: 10px; /* Толщина линии */
+    padding: 0 10px; /* Расстояние между линией и текстом */
+    margin: 30px 50px 70px 50px; /* Отступы */
+}
+
+.centerSections {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align:center;
+}
+
+.bgForOl {
+    background-color: #20454f;
+    color:white;
+}
+
+.imgForAnimalsSection {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    max-width: 350px;
+    object-fit: cover;
+}
