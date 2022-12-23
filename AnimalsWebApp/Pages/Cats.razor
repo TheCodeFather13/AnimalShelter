@@ -1,4 +1,5 @@
 ﻿@page "/cats"
+
 @using AnimalShelter
 @using AnimalShelterCore
 @using Plugins.DataAnimals.Sql.Repositories.Repositories
@@ -7,6 +8,7 @@
 @inject IAnimalRepository AnimalRepository
 @inject ICategoryRepository CategoryRepository
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Категория кошки</PageTitle> 
 <div class="line"></div>    
@@ -27,7 +29,10 @@
                         <h6>Пол: @animal.Gender</h6>
                         <h7>ID: @animal.AnimalId</h7>
                       </div>
-                    </div>                             
+
+                    <button id="divId" class="btn btn-success center"  @onclick="@(() => OnFindCurrentId(animal))">Подать заявку</button>
+
+                </div>                             
               } 
     }
     </div>  
@@ -38,14 +43,22 @@
 @code {
     private IEnumerable<Animal>? animals;
     private IEnumerable<Category>? categories;
-    private Category? category;
+    private Category? category;  
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         animals = AnimalRepository.GetAnimals();
         category = CategoryRepository.GetCategoryById(1);
+    }       
+
+    private void OnFindCurrentId(Animal animal)
+    {
+        
+       
+        NavigationManager.NavigateTo($"/formorder/{animal.AnimalId}");
+
     }
 
-   
+    
 }

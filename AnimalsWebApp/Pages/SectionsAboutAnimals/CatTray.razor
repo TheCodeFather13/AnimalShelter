@@ -1,5 +1,7 @@
 ﻿@page "/CatTray"
 
+@inject NavigationManager NavigationManager
+
 <div class="sections">
 
     <div class="border">
@@ -22,9 +24,23 @@
         <p class="center">Если котенок ходит в туалет на мягкую мебель или в шкаф, придется покупать специальное отпугивающее средство, чтобы отучить его от плохой привычки.</p>
         <p class="center">Приучая котенка к лотку, проявляйте терпение. Если все будете делать правильно, через 2-3 недели котенок начнет ходить на лоток, уже точно понимая его основное предназначение.</p>
        
+        <p class="center">
+            <button class="btn btn-danger" @onclick="OnBack" style="margin-right:55px;">Назад</button>
+
+            Читайте также:
+            <ul style="margin-left:100px;">
+
+                <li><a href="cattoys"><b>ИГРУШКИ ДЛЯ КОШЕК: ВИДЫ, ВЫБОР</b></a></li>
+                <li><a href="catpregnant"><b>БЕРЕМЕННОСТЬ КОШКИ</b></a></li>
+                <li><a href="catfood"><b>ЧЕМ КОРМИТЬ КОТЕНКА?</b></a></li>
+            </ul>
+        </p>
     </div>
 </div>
 
 @code {
-
+    private void OnBack()
+    {
+        NavigationManager.NavigateTo("/sections");
+    }
 }

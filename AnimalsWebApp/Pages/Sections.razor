@@ -16,7 +16,7 @@
     <p class="flexForImg2">
         <a class="btn btn-outline-info" @onclick="OnGoToDogForChildren"><span style="color:black;margin-bottom:5px;">СОБАКА ДЛЯ ДЕТЕЙ</span></a>
         <br />
-        <img src="/css/Images/DogForChildren.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToDogForChildren" />
+        <img src="/css/Images/DogForChildren.jpg" alt="dog" class="imgForAnimalsSection" @onclick="OnGoToDogForChildren" />
     </p>
 
     <p class="flexForImg2">
@@ -26,9 +26,21 @@
     </p>
 
     <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToDogExhibition"><span style="color:black;">КАК ПОДГОТОВИТЬ СОБАКУ К ВЫСТАВКЕ</span></a>
+        <br />
+        <img src="/css/Images/DogExhibition.jpg" alt="dog" class="imgForAnimalsSection" @onclick="OnGoToDogExhibition" />
+    </p>
+
+    <p class="flexForImg2">
         <a class="btn btn-outline-info" @onclick="OnGoToCatIntoxication"><span style="color:black;">ОТРАВЛЕНИЕ У КОШКИ</span></a>
         <br />
         <img src="/css/Images/CatIntoxication.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatIntoxication" />
+    </p>
+
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToDogVaccination"><span style="color:black;">ПРИВИВКИ ДЛЯ СОБАК</span></a>
+        <br />
+        <img src="/css/Images/DogVaccination.jpg" alt="dog" class="imgForAnimalsSection" @onclick="OnGoToDogVaccination" />
     </p>
 
     <p class="flexForImg2">
@@ -36,6 +48,12 @@
         </a>
         <br />
         <img src="/css/Images/CatFood.jpg" alt="cat" class="imgForAnimalsSection" @onclick="OnGoToCatFood" />
+    </p>
+
+    <p class="flexForImg2">
+        <a class="btn btn-outline-info" @onclick="OnGoToDogTravel"><span style="color:black;">КАК ПЕРЕВОЗИТЬ СОБАКУ</span></a>
+        <br />
+        <img src="/css/Images/DogTravel.jpg" alt="dog" class="imgForAnimalsSection" @onclick="OnGoToDogTravel" />
     </p>
 
     <p class="flexForImg2">
@@ -48,6 +66,21 @@
 
 
 @code {
+
+    private void OnGoToDogTravel()
+    {
+        NavigationManager.NavigateTo("/dogtravel");
+    }
+
+    private void OnGoToDogVaccination()
+    {
+        NavigationManager.NavigateTo("/dogvaccination");
+    }
+
+    private void OnGoToDogExhibition()
+    {
+        NavigationManager.NavigateTo("/dogexhibition");
+    }
 
     private void OnGoToDogForChildren()
     {

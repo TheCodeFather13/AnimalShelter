@@ -1,5 +1,7 @@
 ﻿@page "/cattoys"
 
+@inject NavigationManager NavigationManager
+
 <div class="sections">
 
     <div class="border">
@@ -42,8 +44,23 @@
         </ol>
 
         <p class="center">Рекомендуется приобрести кошке несколько разноплановых игрушек, чтобы у нее всегда был выбор. Это также позволит хозяину определить предпочтения пушистого друга.</p>
+    
+        <p class="center">
+            <button class="btn btn-danger" @onclick="OnBack" style="margin-right:55px;">Назад</button>
+
+            Читайте также:
+            <ul style="margin-left:100px;">
+
+                <li><a href="cattray"><b>КАК ПРИУЧИТЬ КОШКУ К ЛОТКУ</b></a></li>
+                <li><a href="catpregnant"><b>БЕРЕМЕННОСТЬ КОШКИ</b></a></li>
+                <li><a href="catfood"><b>ЧЕМ КОРМИТЬ КОТЕНКА?</b></a></li>
+            </ul>
+        </p>
     </div>
 </div>
 @code {
-
+    private void OnBack()
+    {
+        NavigationManager.NavigateTo("/sections");
+    }
 }

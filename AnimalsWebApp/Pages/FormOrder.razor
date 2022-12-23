@@ -1,0 +1,106 @@
+﻿@page "/formorder/{animalId}"
+@using AnimalShelter;
+@using AnimalShelterCore;
+@using UseCases.AnimalUseCasesInterfaces;
+@using UseCases.CategoriesUseCases;
+@using UseCases.ClientOrderUseCasesInterfaces;
+@using UseCases.UseCasesInterfaces;
+
+@inject NavigationManager NavigationManager
+@inject IGetAnimalByIdUseCase GetAnimalByIdUseCase
+@inject IAddClientOrderUseCase AddClientOrderUseCase
+@inject IJSRuntime JSRuntime
+
+<div class="line"></div>
+
+<Microsoft.AspNetCore.Components.Forms.EditForm Model="order" OnValidSubmit="OnValidSubmit" class="mx-1 mx-md-4">
+   <Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator></Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator>
+   <Microsoft.AspNetCore.Components.Forms.ValidationSummary></Microsoft.AspNetCore.Components.Forms.ValidationSummary>
+
+   <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <h4>Вы выбрали кошку(кота) с ID : @this.AnimalId</h4>                                      
+                                    </div>
+                                </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label for="contacts" class="form-label">Ваше имя: </label>
+                                            <Microsoft.AspNetCore.Components.Forms.InputText id="othername" @bind-Value="order.Name" class="form-control"></Microsoft.AspNetCore.Components.Forms.InputText>
+                                        </div>
+                                    </div>
+
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <label for="contacts" class="form-label">Ваши контакты: </label>
+                                        <Microsoft.AspNetCore.Components.Forms.InputText id="othercontacts" @bind-Value="order.Contacts" class="form-control" placeholder="Телефон или почта"></Microsoft.AspNetCore.Components.Forms.InputText>
+                                    </div>
+                                </div>
+
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                        <button class="btn btn-success" type="submit">Отправить свои данные админу</button>                                       
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+</Microsoft.AspNetCore.Components.Forms.EditForm>
+
+@code {
+    [Parameter]
+    public string AnimalId { get; set; }
+
+    private Animal animal;
+    private ClientOrder order;
+
+    private string GetId(string id)
+    {
+        id = this.AnimalId;
+        return id;
+    }
+
+    //protected override void OnParametersSet()
+    //{
+    //    base.OnParametersSet();
+    //    //if (int.TryParse(this.AnimalId, out int ianimalId))
+    //    //{
+
+    //    //}
+    //}
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        order = new ClientOrder();
+
+    }
+
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    var clickeId = this.AnimalId;
+    //    await JSRuntime.InvokeVoidAsync("reply_click", clickeId);
+    //}
+
+    private void OnValidSubmit()
+    {
+        AddClientOrderUseCase.AddClientOrder(order);
+        NavigationManager.NavigateTo("/");
+    }
+}

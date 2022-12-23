@@ -10,6 +10,8 @@ using UseCases.CategoriesUseCases;
 using UseCases.DataAnimalsPluginInterfaces;
 using UseCases.UseCasesInterfaces;
 using Microsoft.AspNetCore.Identity;
+using UseCases.ClientOrderUseCasesInterfaces;
+using UseCases.ClientOrderUseCase;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -30,6 +32,7 @@ builder.Services
 // Dependency injection In memory data store
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IClientOrderRepository, ClientRepository>();
 
 // Category UseCase
 builder.Services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
@@ -44,6 +47,11 @@ builder.Services.AddTransient<IViewAnimalsUseCase, ViewAnimalsUseCase>();
 builder.Services.AddTransient<IDeleteAnimalUseCase, DeleteAnimalUseCase>();
 builder.Services.AddTransient<IEditAnimalUseCase, EditAnimalUseCase>();
 builder.Services.AddTransient<IGetAnimalByIdUseCase, GetAnimalByIdUseCase>();
+
+// ClientOrder UseCase
+builder.Services.AddTransient<IAddClientOrderUseCase, AddClientOrderUseCase>();
+builder.Services.AddTransient<IRemoveClientOrderUseCase, RemoveClientOrderUseCase>();
+builder.Services.AddTransient<IGetClientOrderByIdUseCase, GetClientOrderByIdUseCase>();
 
 
 // Register Blazorise.Bootstrap, fontawesome
