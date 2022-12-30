@@ -1,4 +1,5 @@
-﻿using AnimalShelterCore;
+﻿using AnimalShelter;
+using AnimalShelterCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace UseCases.DataAnimalsPluginInterfaces
         public void AddOrder(ClientOrder clientOrder);
         public void RemoveOrder(int clientId);
         public ClientOrder GetClientOrderById(int clientOrder);
+        IEnumerable<ClientOrder> GetClientsOrders();
+        void Update(ClientOrder clientOrder);
+        int GetOrderCount();
     }
 }

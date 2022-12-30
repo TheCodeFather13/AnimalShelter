@@ -1,8 +1,10 @@
 ﻿@page "/admin"
 @attribute [Authorize(Roles="Admin")]
 @using AnimalShelter;
+@using AnimalShelterCore;
 @using Microsoft.AspNetCore.Authorization;
 @using UseCases.AnimalUseCasesInterfaces;
+@using UseCases.ClientOrderUseCasesInterfaces;
 @using UseCases.UseCasesInterfaces;
 
 @inject NavigationManager NavigationManager
@@ -10,6 +12,9 @@
 @inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
 @inject IViewAnimalsUseCase ViewAnimalsUseCase
 @inject IEditAnimalUseCase EditAnimalUseCase
+@inject IGetClientOrderCountUseCase GetClientOrderCountUseCase
+@inject IJSRuntime JsRuntime
+
 
 <PageTitle>Админ</PageTitle>
 
@@ -55,6 +60,14 @@ else
             </ul>
         </div>
 
+        <p class="buttons">
+            <button type="button" class="btn btn-success" @onclick="OnViewClientsOrders">Заявок на сегодня: 
+                <span>
+                   @clientOrdersCount
+                </span>
+                </button>
+        </p>
+
     </div>
   
         <table class="table smartTable">
@@ -93,8 +106,14 @@ else
 
 @code {
     private IEnumerable<Animal> animals;
-    protected List<Animal> searchAnimalData = new();
+    private int clientOrdersCount;
+    protected List<Animal> searchAnimalData = new();    
     protected string SearchString { get; set; } = string.Empty;
+
+    private void OnViewClientsOrders()
+    {      
+        NavigationManager.NavigateTo("/clientorders");
+    }
 
     protected void FilterUser()
     {
@@ -130,12 +149,18 @@ else
         base.OnInitialized();
         animals = ViewAnimalsUseCase.Execute();
         searchAnimalData = animals.ToList();
+        clientOrdersCount = GetClientOrderCountUseCase.GetCount();
     }
 
-    private void OnDeleteAnimal(int animalId)
+    private async Task OnDeleteAnimal(int animalId)
     {
-        DeleteAnimalUseCase.Delete(animalId);
-        NavigationManager.NavigateTo("/admin");
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Вы уверены?");
+
+        if (confirmed)
+        {
+            DeleteAnimalUseCase.Delete(animalId);
+            NavigationManager.NavigateTo("/admin", true);
+        }
     }
 
     private void OnCancel()

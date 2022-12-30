@@ -27,7 +27,11 @@
                     <h5>Возраст: @animal.Age</h5>
                     <h6>Пол: @animal.Gender</h6>
                     <h7>ID: @animal.AnimalId</h7>
-                </div>
+                    <div style="margin:10px 0 10px 0">
+                        <button id="divId" class="btn btn-success center" @onclick="@(() => OnFindCurrentId(animal))">Подать заявку</button>
+                    </div>
+                    
+                </div>  
             </div>
     }
     </div>  
@@ -43,5 +47,13 @@
         base.OnInitialized();
         category = CategoryRepository.GetCategoryById(2);
         animals = AnimalRepository.GetAnimalByCategoryId(2);
+    }
+
+    private void OnFindCurrentId(Animal animal)
+    {
+
+
+        NavigationManager.NavigateTo($"/formorder/{animal.AnimalId}");
+
     }
 }

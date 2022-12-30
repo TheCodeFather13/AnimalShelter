@@ -52,7 +52,9 @@ builder.Services.AddTransient<IGetAnimalByIdUseCase, GetAnimalByIdUseCase>();
 builder.Services.AddTransient<IAddClientOrderUseCase, AddClientOrderUseCase>();
 builder.Services.AddTransient<IRemoveClientOrderUseCase, RemoveClientOrderUseCase>();
 builder.Services.AddTransient<IGetClientOrderByIdUseCase, GetClientOrderByIdUseCase>();
-
+builder.Services.AddTransient<IViewClientOrderUseCase, ViewClientOrderUseCase>();
+builder.Services.AddTransient<IEditClientOrderUseCase, EditClientOrderUseCase>();
+builder.Services.AddTransient<IGetClientOrderCountUseCase, GetClientOrderCountUseCase>();
 
 // Register Blazorise.Bootstrap, fontawesome
 builder.Services.AddBlazorise(options => { options.Immediate = true; })

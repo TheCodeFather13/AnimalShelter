@@ -1,0 +1,72 @@
+﻿@page "/clientorders"
+@using AnimalShelterCore;
+@using UseCases.ClientOrderUseCasesInterfaces;
+
+@inject NavigationManager NavigationManager
+@inject IAddClientOrderUseCase AddClientOrderUseCase
+@inject IRemoveClientOrderUseCase RemoveClientOrderUseCase
+@inject IViewClientOrderUseCase ViewClientOrderUseCase
+ 
+
+<table class="table smartTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Контакты</th>           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clientOrder in clientOrders)
+        {
+            <tr>   
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@clientOrder.ClientOrderId</td>
+                <td>@clientOrder.Name</td>
+                <td>@clientOrder.Contacts</td>               
+                <td>
+                    <button class="btn btn-danger" @onclick="@(() => OnDeleteClientOrder(clientOrder.ClientOrderId))">Удалить</button>                  
+                    <button class="btn btn-success" @onclick="@(() => OnEditClientOrder(clientOrder))">Редактировать</button>                  
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<ClientOrder>? clientOrders;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        clientOrders = ViewClientOrderUseCase.Execute();
+    }
+
+    //protected override void OnAfterRender(bool firstRender) Обновляет страницу сам
+    //{
+    //    if (firstRender)
+    //    {
+    //        var timer = new Timer(new TimerCallback(_ =>
+    //        {
+    //            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    //        }), null, 3000, 3000);
+    //    }
+    //}
+
+    private void OnDeleteClientOrder(int clientId)
+    {
+        RemoveClientOrderUseCase.RemoveClientOrder(clientId);
+        NavigationManager.NavigateTo("/clientorders", true);
+    }
+
+    private void OnEditClientOrder(ClientOrder clientOrder)
+    {
+        NavigationManager.NavigateTo($"/editclientorder/{clientOrder.ClientOrderId}"); 
+    }
+
+}

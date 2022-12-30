@@ -36,6 +36,16 @@ namespace Plugins.DataAnimals.Sql.Repositories.Repositories
             return _animalShelterDbContext.ClientOrders.Find(clientOrder);
         }
 
+        public IEnumerable<ClientOrder> GetClientsOrders()
+        {
+            return _animalShelterDbContext.ClientOrders.ToList();
+        }
+
+        public int GetOrderCount()
+        {
+            return _animalShelterDbContext.ClientOrders.ToList().Count;
+        }
+
         public void RemoveOrder(int clientId)
         {
             try
@@ -46,6 +56,27 @@ namespace Plugins.DataAnimals.Sql.Repositories.Repositories
                     return;                
                 }
                 _animalShelterDbContext.ClientOrders.Remove(clientOrderToDelete);
+                _animalShelterDbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void Update(ClientOrder clientOrder)
+        {
+            try
+            {
+                var clientOrderToUpdate = GetClientOrderById(clientOrder.ClientOrderId);
+                if(clientOrderToUpdate == null)
+                {
+                    return;
+                }
+                clientOrderToUpdate.ClientOrderId = clientOrder.ClientOrderId;
+                clientOrderToUpdate.Name = clientOrder.Name;
+                clientOrderToUpdate.Contacts = clientOrder.Contacts;
                 _animalShelterDbContext.SaveChanges();
             }
             catch (Exception)
