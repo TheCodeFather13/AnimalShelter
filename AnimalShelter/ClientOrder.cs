@@ -14,12 +14,12 @@ namespace AnimalShelterCore
         public int ClientOrderId { get; set; }
 
         [Required]
-        [MaxLength(50), MinLength(2)]
-        [RegularExpression (@"a-zA-Z")]
+        [MaxLength(50, ErrorMessage = "Максимальная длина 50 букв"), MinLength(2, ErrorMessage = "Минимальная длина 2 буквы")]
+        [RegularExpression (@"a-zA-Z '-'", ErrorMessage = "Необходимы буквы от а до я!")]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(30), MinLength(10)]
+        [MaxLength(30, ErrorMessage = "Максимальная длина 30 символов"), MinLength(5, ErrorMessage = "Минимальная длина 5 символов")]       
         public string Contacts { get; set; }
     }
 }
