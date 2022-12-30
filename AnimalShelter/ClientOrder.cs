@@ -13,13 +13,13 @@ namespace AnimalShelterCore
     {
         public int ClientOrderId { get; set; }
 
-
         [Required]
         [MaxLength(50), MinLength(2)]
-        [RegularExpression (@"a-z")]
+        [RegularExpression (@"a-zA-Z")]
         public string Name { get; set; }
 
-         [Required]
+        [Required]
+        [MaxLength(30), MinLength(10)]
         public string Contacts { get; set; }
     }
 }
