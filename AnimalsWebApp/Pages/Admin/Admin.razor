@@ -15,8 +15,6 @@
 @inject IGetClientOrderCountUseCase GetClientOrderCountUseCase
 @inject IJSRuntime JsRuntime
 
-
-
 <PageTitle>Админ</PageTitle>
 
 @if (animals == null)
@@ -77,6 +75,7 @@ else
             <thead>
                 <tr>
                     <th>Фото</th>
+                    <th>Вакцинация</th>
                     <th>Категория</th>
                     <th>Имя</th>
                     <th>Пол</th>
@@ -91,6 +90,16 @@ else
                 {
                     <tr>
                         <td><img src="@animal.ImagePath" alt="" class="imgForAnimals" /></td>
+                    <td>
+                        @if (animal.IsVaccinated == true)
+                        {
+                            <td style="color:limegreen">Вакцинирован</td>
+                        }
+                        else
+                        {
+                            <td style="color:red">Требуется вакцинация</td>
+                        }
+                    </td>
                         <td>@GetCategoryByIdUseCase.Execute(animal.CategoryId).Name</td>
                         <td>@animal.Name</td>
                         <td>@animal.Gender</td>

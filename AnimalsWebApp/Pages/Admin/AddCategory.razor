@@ -72,7 +72,7 @@ else
         if (context.Validate())
         {
             AddCategoryUseCase.Execute(category);
-            NavigationManager.NavigateTo("/admin");
+            NavigationManager.NavigateTo("/category", true);
         }
     }
 
@@ -83,7 +83,7 @@ else
         if (confirmed)
         {
             DeleteCategoryUseCase.Delete(categoryId);
-            NavigationManager.NavigateTo("/admin");
+            NavigationManager.NavigateTo("/category", true);
         }
     }
 }

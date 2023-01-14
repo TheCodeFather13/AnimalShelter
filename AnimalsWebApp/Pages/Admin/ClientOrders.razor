@@ -6,30 +6,27 @@
 @inject IAddClientOrderUseCase AddClientOrderUseCase
 @inject IRemoveClientOrderUseCase RemoveClientOrderUseCase
 @inject IViewClientOrderUseCase ViewClientOrderUseCase
- 
 
 <table class="table table-bordered table-striped" style="width:100%">
     <thead>
         <tr>         
-            <th>ID</th>
-            <th>Имя</th>
-            <th>Контакты</th>           
+            <th width="10%">ID</th>
+            <th width="25%">Имя</th>
+            <th width="65%">Контакты</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var clientOrder in clientOrders)
         {
-            <tr>   
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr>                  
                 <td>@clientOrder.ClientOrderId</td>
                 <td>@clientOrder.Name</td>
-                <td>@clientOrder.Contacts</td>               
                 <td>
-                    <button class="btn btn-danger" @onclick="@(() => OnDeleteClientOrder(clientOrder.ClientOrderId))">Удалить</button>                  
-                    <button class="btn btn-success" @onclick="@(() => OnEditClientOrder(clientOrder))">Редактировать</button>                  
-                </td>
+                    @clientOrder.Contacts &nbsp;&nbsp;
+                    
+                    <button class="btn btn-danger" @onclick="@(() => OnDeleteClientOrder(clientOrder.ClientOrderId))">Удалить</button>
+                    <button class="btn btn-success" @onclick="@(() => OnEditClientOrder(clientOrder))">Редактировать</button>
+                </td>                      
             </tr>
         }
     </tbody>
@@ -65,5 +62,4 @@
     {
         NavigationManager.NavigateTo($"/editclientorder/{clientOrder.ClientOrderId}"); 
     }
-
 }

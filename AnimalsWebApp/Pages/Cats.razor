@@ -15,7 +15,7 @@
 <div class="line"></div>    
 
 @if(animals != null)
-{ 
+{   
     <div class="flexForImg">
          @foreach(var animal in animals)
             { 
@@ -28,9 +28,22 @@
                       <div class="containerForAnimalsDescription">
                        
                         <h4>Имя: @animal.Name</h4>
-                        <h5>Возраст: @animal.Age</h5>
-                        <h6>Пол: @animal.Gender</h6>
-                        <h7>ID: @animal.AnimalId</h7>
+                        <h4>Возраст: @animal.Age</h4>
+                        @if (animal.Gender == "Male")
+                        {
+                            <h4>Пол: Мужской</h4>
+                        }
+                        else if (animal.Gender == "Female")
+                        {
+                            <h4>Пол: Женский</h4>
+                        }
+                        @if (animal.IsVaccinated == true)
+                        {
+                            <h4 style="color:limegreen">Вакцинирован</h4>
+                        }else{
+                            <h4 style="color:red">Требуется вакцинация</h4>
+                        }
+                        <h4>ID: @animal.AnimalId</h4>
 
                         <div style="margin:10px 0 10px 0">
                             <button id="divId" class="btn btn-success center" @onclick="@(() => OnFindCurrentId(animal))">Подать заявку</button>

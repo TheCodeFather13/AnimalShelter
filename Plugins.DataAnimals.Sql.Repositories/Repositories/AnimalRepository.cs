@@ -86,7 +86,8 @@ namespace Plugins.DataAnimals.Sql.Repositories.Repositories
                 animalToUpdate.Age = animal.Age;
                 animalToUpdate.DayOfPublication = animal.DayOfPublication;
                 animalToUpdate.Contacts = animal.Contacts;
-                animalToUpdate.ImagePath = animal.ImagePath;              
+                animalToUpdate.ImagePath = animal.ImagePath;   
+                animalToUpdate.IsVaccinated = animal.IsVaccinated;
                 _animalShelterDbContext.SaveChanges();
             }
             catch (Exception)
