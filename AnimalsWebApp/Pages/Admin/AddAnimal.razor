@@ -25,7 +25,7 @@ else
     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
         <button class="btn btn-danger" @onclick="OnCancel">Назад</button>
     </p>
-    <EditForm Model="animal" OnValidSubmit="OnValidSubmit" class="mx-1 mx-md-4">
+    <EditForm Model="animal" OnValidSubmit="OnValidSubmit" class="mx-1 mx-md-4" enctype="multipart/form-data">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
@@ -99,7 +99,19 @@ else
                                             <label for="imagePath">Вставить фотку</label>
                                            @* <InputFile OnChange="OnFileChange" class="form-label"></InputFile>*@
 
-                                            <input type="text" onchange="onfilechange" class="form-label" />                                          
+                                            @if (!string.IsNullOrEmpty(animal.ImagePath))
+                                            {
+                                                <img src="@animal.ImagePath" class="imgForAnimals" />
+                                            }
+                                            else
+                                            {
+                                                foreach (var image in animal.Images)
+                                                {
+                                                    <img src="@image.Data" class="imgForAnimals" />
+                                                }
+                                            }
+
+                                            <InputFile id="images" OnChange="OnFileChange" multiple class="form-label"></InputFile>
                                         </div>
                                     </div>
 
@@ -165,9 +177,16 @@ else
         }
     }    
 
-    private void OnFileChange(InputFileChangeEventArgs e)
+    async Task OnFileChange(InputFileChangeEventArgs e)
     {
-        var imageData = $"css/Images/" + e.File.Name;        
+        //var imageData = $"css/Images/" + e.File.Name;
+        //animal.ImagePath = imageData;
+        var format = "image/jpg";
+
+        var resizedImage = await e.File.RequestImageFileAsync(format, 250, 250);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
         animal.ImagePath = imageData;
     }
    

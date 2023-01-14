@@ -21,6 +21,7 @@ namespace Plugins.DataAnimals.Sql.Repositories
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ClientOrder> ClientOrders { get; set; }
+        public DbSet<AnimalImage> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

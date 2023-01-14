@@ -3,18 +3,20 @@
 @using AnimalShelterCore;
 @using Microsoft.AspNetCore.Components.Forms
 @using UseCases.AnimalUseCasesInterfaces;
+@using UseCases.DataAnimalsPluginInterfaces;
 @using UseCases.UseCasesInterfaces;
 
 @inject IEditAnimalUseCase EditAnimalUseCase
 @inject IGetAnimalByIdUseCase GetAnimalByIdUseCase
 @inject IViewCategoriesUseCase ViewCategoriesUseCase
+@inject IAnimalRepository AnimalRepository
 @inject NavigationManager NavigationManager
 
 <div class="line"></div>
 
-@if(animal == null)
+@if (animal == null)
 {
-   <SpinnerComponent></SpinnerComponent>
+    <SpinnerComponent></SpinnerComponent>
 }
 else
 {
@@ -31,7 +33,7 @@ else
                     <div class="card text-black" style="border-radius: 25px;">
                         <div class="card-body p-md-5">
                             <div class="row justify-content-center">
-                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">                                                                                                                                        
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -90,17 +92,33 @@ else
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label for="imagePath">Вставить фотку</label>
-                                            <InputFile OnChange="OnFileChange" class="form-label"></InputFile>
-                                           
+                                            <label for="images">Вставить фотку</label>
+
+                                            @*<InputFile OnChange="OnFileChange" class="form-label"></InputFile>*@
+
+                                            @if (!string.IsNullOrEmpty(animal.ImagePath))
+                                            {
+                                                <img src="@animal.ImagePath" class="imgForAnimals" />
+                                            }
+                                            else
+                                            {
+                                                foreach (var image in animal.Images)
+                                                {
+                                                    <img src="@image.Data" class="imgForAnimals" />
+                                                }
+                                            }
+
+                                            <InputFile id="images" OnChange="OnFileChange" multiple class="form-label"></InputFile>
+
+
                                         </div>
                                     </div>
 
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <button class="btn btn-success" type="submit">Сохранить редактирование</button>                                       
-                                    </div>  
+                                        <button class="btn btn-success" type="submit">Сохранить редактирование</button>
+                                    </div>
 
                                     @if (displayValidationErrorMessages)
                                     {
@@ -124,7 +142,7 @@ else
         </div>
     }
 }
-    
+
 
 @code {
     [Parameter]
@@ -133,13 +151,15 @@ else
     private IEnumerable<Category> categories;
     private DateTime dayOfPublication;
 
+
+
     bool displayValidationErrorMessages = false;
     bool displayUserAddedToDB = false;
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        if(int.TryParse(this.AnimalId, out int ianimalId))
+        if (int.TryParse(this.AnimalId, out int ianimalId))
         {
             var anim = GetAnimalByIdUseCase.GetAnimalById(ianimalId);
             animal = new Animal
@@ -167,7 +187,7 @@ else
 
     private void OnValidSubmit(EditContext context)
     {
-        if(context.Validate())
+        if (context.Validate())
         {
             EditAnimalUseCase.Execute(this.animal);
             displayValidationErrorMessages = false;
@@ -179,15 +199,22 @@ else
             displayValidationErrorMessages = true;
             displayUserAddedToDB = false;
         }
-    }    
-
-    private void OnFileChange(InputFileChangeEventArgs e)
-    {
-        var imageData = $"css/Images/" + e.File.Name;        
-        animal.ImagePath = imageData;
-
     }
-   
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        //var imageData = $"css/Images/" + e.File.Name;
+        //animal.ImagePath = imageData;
+
+        var format = "image/jpg";
+
+        var resizedImage = await e.File.RequestImageFileAsync(format, 250, 250);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        animal.ImagePath = imageData;
+    }
+
 
     private void OnCancel()
     {

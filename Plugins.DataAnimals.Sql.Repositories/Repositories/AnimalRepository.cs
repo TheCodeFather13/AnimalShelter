@@ -1,4 +1,9 @@
 ﻿using AnimalShelter;
+using AnimalShelterCore;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +11,17 @@ using System.Text;
 using System.Threading.Tasks;
 using UseCases.DataAnimalsPluginInterfaces;
 
+
 namespace Plugins.DataAnimals.Sql.Repositories.Repositories
 {
     public class AnimalRepository : IAnimalRepository
     {
         private readonly AnimalShelterDbContext _animalShelterDbContext;
+        
 
         public AnimalRepository(AnimalShelterDbContext animalShelterDbContext)
         {
-            _animalShelterDbContext = animalShelterDbContext;
+            _animalShelterDbContext = animalShelterDbContext;           
         }
 
         public void AddAnimal(Animal animal)
@@ -63,6 +70,8 @@ namespace Plugins.DataAnimals.Sql.Repositories.Repositories
             return _animalShelterDbContext.Animals.ToList();
         }
 
+       
+
         public void Update(Animal animal)
         {
             try
@@ -77,7 +86,7 @@ namespace Plugins.DataAnimals.Sql.Repositories.Repositories
                 animalToUpdate.Age = animal.Age;
                 animalToUpdate.DayOfPublication = animal.DayOfPublication;
                 animalToUpdate.Contacts = animal.Contacts;
-                animalToUpdate.ImagePath = animal.ImagePath;
+                animalToUpdate.ImagePath = animal.ImagePath;              
                 _animalShelterDbContext.SaveChanges();
             }
             catch (Exception)

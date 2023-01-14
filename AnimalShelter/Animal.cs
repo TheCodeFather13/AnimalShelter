@@ -26,6 +26,8 @@ namespace AnimalShelter
         public string Contacts { get; set; }
       
         public string ImagePath { get; set; }
+       
+        public List<AnimalImage> Images { get; set; } = new List<AnimalImage>();
 
         public Category Category { get; set; }
     }

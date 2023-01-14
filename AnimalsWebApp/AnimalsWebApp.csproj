@@ -32,4 +32,8 @@
     <ProjectReference Include="..\Plugins.DataAnimals.Sql.Repositories\Plugins.DataAnimals.Sql.Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\fontawesome\" />
+  </ItemGroup>
+
 </Project>

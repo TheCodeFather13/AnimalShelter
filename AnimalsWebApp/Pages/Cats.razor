@@ -2,6 +2,7 @@
 
 @using AnimalShelter
 @using AnimalShelterCore
+@using AnimalsWebApp.Pages.Admin;
 @using Plugins.DataAnimals.Sql.Repositories.Repositories
 @using UseCases.DataAnimalsPluginInterfaces
 
@@ -21,9 +22,11 @@
                 @if(animal.CategoryId == 1)
               {                                   
                    <div class="flexForImg2">
-                        <img src="@animal.ImagePath" class="imgForAnimals"/>
+
+                    <img src="@animal.ImagePath" class="imgForAnimals" />
                         
                       <div class="containerForAnimalsDescription">
+                       
                         <h4>Имя: @animal.Name</h4>
                         <h5>Возраст: @animal.Age</h5>
                         <h6>Пол: @animal.Gender</h6>

@@ -15,7 +15,7 @@ namespace AnimalShelterCore
 
         [Required]
         [MaxLength(50, ErrorMessage = "Максимальная длина 50 букв"), MinLength(2, ErrorMessage = "Минимальная длина 2 буквы")]
-        [RegularExpression (@"a-zA-Z '-'", ErrorMessage = "Необходимы буквы от а до я!")]
+       // [RegularExpression (@"a-zA-Z '-'", ErrorMessage = "Необходимы буквы от а до я!")]
         public string Name { get; set; }
 
         [Required]

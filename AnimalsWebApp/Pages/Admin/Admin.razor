@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.Authorization;
 @using UseCases.AnimalUseCasesInterfaces;
 @using UseCases.ClientOrderUseCasesInterfaces;
-@using UseCases.UseCasesInterfaces;
+@using UseCases.UseCasesInterfaces
 
 @inject NavigationManager NavigationManager
 @inject IDeleteAnimalUseCase DeleteAnimalUseCase
@@ -14,6 +14,7 @@
 @inject IEditAnimalUseCase EditAnimalUseCase
 @inject IGetClientOrderCountUseCase GetClientOrderCountUseCase
 @inject IJSRuntime JsRuntime
+
 
 
 <PageTitle>Админ</PageTitle>
@@ -26,7 +27,9 @@ else
 {
       <div class="input-group col buttons">
         <p class="buttons">
-            <button type="button" class="btn btn-success" @onclick="OnAddAnimal">Добавить животное</button>         
+            <button type="button" class="btn btn-success" @onclick="OnAddAnimal">
+                <i class="fa-solid fa-plus"></i>&nbsp; Добавить животное
+            </button>
         </p>
 
         <p class="buttons">
@@ -69,8 +72,8 @@ else
         </p>
 
     </div>
-  
-        <table class="table smartTable">
+
+    <table class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>Фото</th>

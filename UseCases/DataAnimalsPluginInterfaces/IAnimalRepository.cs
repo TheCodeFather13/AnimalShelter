@@ -1,4 +1,5 @@
 ﻿using AnimalShelter;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace UseCases.DataAnimalsPluginInterfaces
         void Update(Animal animal);
         Animal GetAnimalById(int id);
         void DeleteAnimal(int animalId);
-        IEnumerable<Animal> GetAnimalByCategoryId(int categoryId);
+        IEnumerable<Animal> GetAnimalByCategoryId(int categoryId);     
     }
 }

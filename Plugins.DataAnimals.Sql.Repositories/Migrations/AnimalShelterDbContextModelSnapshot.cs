@@ -69,7 +69,7 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                             Age = "1 месяц",
                             CategoryId = 1,
                             Contacts = "Maria 079245611",
-                            DayOfPublication = new DateTime(2022, 12, 21, 17, 26, 56, 755, DateTimeKind.Utc).AddTicks(1829),
+                            DayOfPublication = new DateTime(2023, 1, 6, 17, 34, 48, 737, DateTimeKind.Utc).AddTicks(808),
                             Gender = "Female",
                             ImagePath = "css/Images/Cat1.jpg",
                             Name = "Муся"
@@ -80,7 +80,7 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                             Age = "5 месяцев",
                             CategoryId = 1,
                             Contacts = "Svetlana 069367315",
-                            DayOfPublication = new DateTime(2022, 12, 21, 17, 26, 56, 755, DateTimeKind.Utc).AddTicks(1831),
+                            DayOfPublication = new DateTime(2023, 1, 6, 17, 34, 48, 737, DateTimeKind.Utc).AddTicks(812),
                             Gender = "Male",
                             ImagePath = "css/Images/Cat2.jpg",
                             Name = "Вася"
@@ -91,11 +91,33 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                             Age = "1 год",
                             CategoryId = 1,
                             Contacts = "Georgii 079996377",
-                            DayOfPublication = new DateTime(2022, 12, 21, 17, 26, 56, 755, DateTimeKind.Utc).AddTicks(1832),
+                            DayOfPublication = new DateTime(2023, 1, 6, 17, 34, 48, 737, DateTimeKind.Utc).AddTicks(814),
                             Gender = "Female",
                             ImagePath = "css/Images/Cat3.jpg",
                             Name = "Бусинка"
                         });
+                });
+
+            modelBuilder.Entity("AnimalShelterCore.AnimalImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AnimalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("AnimalShelterCore.Category", b =>
@@ -137,11 +159,13 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
 
                     b.Property<string>("Contacts")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ClientOrderId");
 
@@ -177,15 +201,15 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a974d29d-fdc6-4272-bc8b-ddb9bd79cdf5",
-                            ConcurrencyStamp = "dc8d8493-e0b0-4b2e-8eb9-8b9382a47d8d",
+                            Id = "8ba09528-869e-419c-b9ea-28743c143509",
+                            ConcurrencyStamp = "a6c701da-e566-4e4c-9ae3-d57c374197a0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fdc81aba-e4c7-46d8-83e5-a1dd97e8407a",
-                            ConcurrencyStamp = "ff59c735-b14d-46df-bd09-7db58b39b17e",
+                            Id = "15814282-b0a3-4372-a9c6-0cfb78025246",
+                            ConcurrencyStamp = "fb743de3-6605-4a05-89db-7a47cf3676ae",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -377,6 +401,13 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("AnimalShelterCore.AnimalImage", b =>
+                {
+                    b.HasOne("AnimalShelter.Animal", null)
+                        .WithMany("Images")
+                        .HasForeignKey("AnimalId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -426,6 +457,11 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AnimalShelter.Animal", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("AnimalShelterCore.Category", b =>
