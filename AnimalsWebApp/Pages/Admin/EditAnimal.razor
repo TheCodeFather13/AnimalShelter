@@ -46,7 +46,7 @@ else
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label for="category">Категория</label>
+                                            <label for="category">Категория: </label>
                                             <select id="category" @bind="animal.CategoryId">
                                                 <option value="0">Выберите категорию животного</option>
                                                 @foreach (var category in categories)
@@ -60,7 +60,7 @@ else
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label for="age" class="form-label">Возраст</label>
+                                            <label for="age" class="form-label">Возраст: </label>
                                             <InputText id="age" @bind-Value="animal.Age" class="form-control"></InputText>
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@ else
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label for="gender" class="form-label">Пол</label>
+                                            <label for="gender" class="form-label">Пол: </label>
                                             <InputText id="gender" @bind-Value="animal.Gender" class="form-control" placeholder="Male или Female"></InputText>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@ else
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label for="contacts" class="form-label">Контакты</label>
+                                            <label for="contacts" class="form-label">Контакты: </label>
                                             <InputText id="contacts" @bind-Value="animal.Contacts" class="form-control"></InputText>
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@ else
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label for="dayOfPublication">День публикации</label>
+                                            <label for="dayOfPublication">День публикации: </label>
                                             <input type="date" id="dayOfPublication" @bind="dayOfPublication"></input>
                                         </div>
                                     </div>
@@ -211,16 +211,26 @@ else
 
     async Task OnFileChange(InputFileChangeEventArgs e)
     {
-        //var imageData = $"css/Images/" + e.File.Name;
+        // Так работает, но режется картинка
+        //var format = "image/jpg";
+        //var resizedImage = await e.File.RequestImageFileAsync(format, 250, 250);
+        //var buffer = new byte[resizedImage.Size];
+        //await resizedImage.OpenReadStream().ReadAsync(buffer);
+        //var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
         //animal.ImagePath = imageData;
 
-        var format = "image/jpg";
 
-        var resizedImage = await e.File.RequestImageFileAsync(format, 250, 250);
-        var buffer = new byte[resizedImage.Size];
-        await resizedImage.OpenReadStream().ReadAsync(buffer);
-        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
-        animal.ImagePath = imageData;
+        // Так работает на УРА!
+        using MemoryStream ms = new();
+        var resized = await e.File.RequestImageFileAsync(e.File.ContentType, maxWidth: 500, maxHeight: 500);
+        using Stream fileStream = resized.OpenReadStream();
+        await fileStream.CopyToAsync(ms);
+
+        // Получаем конечный запрашиваемый файл
+        var fileString = $"data:{e.File.ContentType};base64,{Convert.ToBase64String(ms.ToArray())}";
+
+        // Передаем файл в нашу базу данных
+        animal.ImagePath = fileString;
     }
 
     private void OnCancel()

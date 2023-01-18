@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plugins.DataAnimals.Sql.Repositories;
 
@@ -11,9 +12,11 @@ using Plugins.DataAnimals.Sql.Repositories;
 namespace Plugins.DataAnimals.Sql.Repositories.Migrations
 {
     [DbContext(typeof(AnimalShelterDbContext))]
-    partial class AnimalShelterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230116092216_UpdateDB")]
+    partial class UpdateDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

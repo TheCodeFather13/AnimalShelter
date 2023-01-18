@@ -57,6 +57,8 @@ else
                 <li><button class="dropdown-item" @onclick="OnCategorySortCatsDogs">Кошки-Собаки</button></li>
                 <li><button class="dropdown-item" @onclick="OnCategorySortDogsCats">Собаки-Кошки</button></li>
                 <li><button class="dropdown-item" @onclick="OnSortGender">По полу</button></li>
+                <li><button class="dropdown-item" @onclick="OnSortVaccination">Сначала вакцинированные</button></li>
+                <li><button class="dropdown-item" @onclick="OnSortNoVaccination">Сначала не вакцинированные</button></li>              
                 <li><button class="dropdown-item" @onclick="OnNormalMode">По умолчанию</button></li>
             </ul>
         </div>
@@ -203,5 +205,15 @@ else
     private void OnNormalMode()
     {
         animals = searchAnimalData.ToList();
+    }
+
+    private void OnSortNoVaccination()
+    {
+        animals = searchAnimalData.OrderBy(x => !x.IsVaccinated == false).ToList();
+    }
+
+    private void OnSortVaccination()
+    {
+        animals = searchAnimalData.OrderBy(x => !x.IsVaccinated == true).ToList();
     }
 }
