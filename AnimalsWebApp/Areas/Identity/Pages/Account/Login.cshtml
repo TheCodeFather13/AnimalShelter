@@ -25,17 +25,12 @@
         <span style="color:white"><b>@Html.DisplayNameFor(m => m.Input.RememberMe)</b></span>
 
     </div>
-        <button class="button-9" id="forgot-password" asp-page="./ForgotPassword">Забыли пароль?</button>
+       @* <button class="button-9" id="forgot-password" asp-page="./ForgotPassword">Забыли пароль?</button>*@
         <button class="button-9" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Регистрация нового пользователя</button>
-        <button class="button-9" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Прислать письмо регистрации на почту</button>
+      @*  <button class="button-9" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Прислать письмо регистрации на почту</button>*@
+    <a class="button-9" href="/" style="text-align:center;padding-top: 10px;">Назад</a>
     </div>
-
-
 </form>
-
-
-
-
 
 
 <div class="col-md-6 col-md-offset-2">
