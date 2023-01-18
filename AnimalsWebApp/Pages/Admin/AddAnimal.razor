@@ -12,6 +12,7 @@
 @inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
 @inject IViewCategoriesUseCase ViewCategoriesUseCase
 @inject IWebHostEnvironment Environment
+@inject IJSRuntime JSRuntime
 @inject ILogger<AddAnimal> Logger
 
 <div class="line"></div>
@@ -39,17 +40,17 @@ else
                                                                                                         
                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Добавить животное</p>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                    <div class="d-flex flex-row align-items-center mb-4">                                     
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fas fa-user fa-lg fa-fw"></i>
                                             <label for="name" class="form-label">Имя: </label>
                                             <InputText id="name" @bind-Value="animal.Name" class="form-control" placeholder="Введите имя"></InputText>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                    <div class="d-flex flex-row align-items-center mb-4">                                      
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-hippo"></i>
                                             <label for="category">Категория: </label>
                                             <select id="category" @bind="animal.CategoryId">
                                                 <option value="0">Выберите категорию животного</option>
@@ -61,33 +62,33 @@ else
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                    <div class="d-flex flex-row align-items-center mb-4">                                   
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-cake-candles"></i>
                                             <label for="age" class="form-label">Возраст: </label>
                                             <InputText id="age" @bind-Value="animal.Age" class="form-control"></InputText>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="d-flex flex-row align-items-center mb-4">                                    
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-venus-mars"></i>
                                             <label for="gender" class="form-label">Пол: </label>
                                             <InputText id="gender" @bind-Value="animal.Gender" class="form-control" placeholder="Male или Female"></InputText>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="d-flex flex-row align-items-center mb-4">                                      
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-phone-volume"></i>
                                             <label for="contacts" class="form-label">Контакты: </label>
                                             <InputText id="contacts" @bind-Value="animal.Contacts" class="form-control"></InputText>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                    <div class="d-flex flex-row align-items-center mb-4">                                     
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-syringe"></i>
                                             <label for="vaccination">Вакцинация:
                                                 <InputCheckbox @bind-Value="animal.IsVaccinated" class="form-check-input"/>
                                             </label>                                         
@@ -95,17 +96,18 @@ else
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-calendar-days"></i>
                                             <label for="dayOfPublication">День публикации: </label>
                                             <input type="date" id="dayOfPublication" @bind="dayOfPublication"></input>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-camera-retro"></i>
                                             <label for="imagePath">Вставить фотку</label>
+                                            &nbsp;
                                            @* <InputFile OnChange="OnFileChange" class="form-label"></InputFile>*@
 
                                             @if (!string.IsNullOrEmpty(animal.ImagePath))
@@ -119,15 +121,15 @@ else
                                                     <img src="@image.Data" class="imgForAnimals" />
                                                 }
                                             }
-
-                                            <InputFile id="images" OnChange="OnFileChange" multiple class="form-label"></InputFile>
+                                            <InputFile id="uploadBox" OnChange="OnFileChange" class="form-label"></InputFile>
                                         </div>
                                     </div>
 
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <button class="btn btn-success" type="submit">Сохранить</button>                                       
+                                    <div class="d-flex flex-row align-items-center mb-4">                                      
+                                        <button class="btn btn-success" type="submit" onlick="return validateInput()">
+                                            <i class="fa-solid fa-share-from-square"></i> &nbsp;Сохранить
+                                        </button>
+                                       
                                     </div>  
 
                                     @if (displayValidationErrorMessages)
@@ -170,10 +172,11 @@ else
         categories = ViewCategoriesUseCase.Execute();
     }
 
-    private void OnValidSubmit(EditContext context)
+    private async Task OnValidSubmit(EditContext context)
     {
         if(context.Validate())
-        {
+        {        
+            await JSRuntime.InvokeVoidAsync("validateInput", "error");
             AddAnimalUseCase.AddAnimal(animal);
             displayValidationErrorMessages = false;
             displayUserAddedToDB = true;
