@@ -2,14 +2,33 @@
 @using AnimalShelter
 @using AnimalShelterCore
 @using Plugins.DataAnimals.Sql.Repositories.Repositories
+@using UseCases.AnimalUseCasesInterfaces;
 @using UseCases.DataAnimalsPluginInterfaces
 
 @inject IAnimalRepository AnimalRepository
 @inject ICategoryRepository CategoryRepository
+@inject IViewAnimalsUseCase ViewAnimalsUseCase
 @inject NavigationManager NavigationManager
 
 <PageTitle>Категория собаки</PageTitle>
 <div class="line"></div>
+
+<div class="dropdown" style="margin-left:115px">
+
+    <button class="btn btn-secondary dropdown-toggle buttons" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp;&nbsp;Сортировать по
+    </button>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><button class="dropdown-item" @onclick="OnDescAlphabet">Имени</button></li>
+        <li><button class="dropdown-item" @onclick="OnSortGenderFemale">Полу женский-мужской</button></li>
+        <li><button class="dropdown-item" @onclick="OnSortGenderMale">Полу мужской-женский</button></li>
+        <li><button class="dropdown-item" @onclick="OnSortVaccination">Сначала вакцинированные</button></li>
+        <li><button class="dropdown-item" @onclick="OnSortNoVaccination">Сначала не вакцинированные</button></li>
+        <li><button class="dropdown-item" @onclick="OnNormalMode">По умолчанию</button></li>
+    </ul>
+</div>
+
 @if(animals != null)
 { 
     <div class="flexForImg">
@@ -19,7 +38,10 @@
               {                                   
                                               
               }*@
-            <div class="flexForImg2">
+
+            @if (animal.CategoryId == 2)
+            {
+                <div class="flexForImg2">
                 <img src="@animal.ImagePath" class="imgForAnimals" />
 
                 <div class="containerForAnimalsDescription">
@@ -48,6 +70,7 @@
                     
                 </div>  
             </div>
+            }
     }
     </div>  
 }
@@ -55,20 +78,50 @@
 @code {
     private IEnumerable<Animal>? animals;
     private IEnumerable<Category>? categories;
+    protected List<Animal> searchAnimalData = new();
     private Category? category;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         category = CategoryRepository.GetCategoryById(2);
-        animals = AnimalRepository.GetAnimalByCategoryId(2);
+      //  animals = AnimalRepository.GetAnimalByCategoryId(2);
+        animals = ViewAnimalsUseCase.Execute();
+        searchAnimalData = animals.ToList();
     }
 
     private void OnFindCurrentId(Animal animal)
     {
-
-
         NavigationManager.NavigateTo($"/formorder/{animal.AnimalId}");
+    }
 
+    private void OnDescAlphabet()
+    {
+        animals = searchAnimalData.Where(x => x.CategoryId == 2).OrderBy(x => x.Name).ToList();
+    }
+
+    private void OnSortGenderFemale()
+    {
+        animals = searchAnimalData.Where(x => x.CategoryId == 2).OrderBy(x => x.Gender).ToList();
+    }
+
+    private void OnSortGenderMale()
+    {
+        animals = searchAnimalData.Where(x => x.CategoryId == 2).OrderByDescending(x => x.Gender).ToList();
+    }
+
+    private void OnSortNoVaccination()
+    {
+        animals = searchAnimalData.OrderBy(x => x.IsVaccinated).ToList();
+    }
+
+    private void OnSortVaccination()
+    {
+        animals = searchAnimalData.OrderByDescending(x => x.IsVaccinated).ToList();
+    }
+
+    private void OnNormalMode()
+    {
+        animals = searchAnimalData.ToList();
     }
 }

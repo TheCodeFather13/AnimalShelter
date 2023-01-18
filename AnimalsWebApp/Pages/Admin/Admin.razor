@@ -31,7 +31,9 @@ else
         </p>
 
         <p class="buttons">
-            <button type="button" class="btn btn-success" @onclick="OnAddCategory">Работа с категориями</button>
+            <button type="button" class="btn btn-success" @onclick="OnAddCategory">
+                <i class="fa-solid fa-briefcase"></i>&nbsp;&nbsp;Работа с категориями
+            </button>
         </p>
 
         <p class="buttons">
@@ -49,11 +51,11 @@ else
         <div class="dropdown">
             
             <button class="btn btn-secondary dropdown-toggle buttons" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                &nbsp;&nbsp;&nbsp;Сортировать по
+                <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp;&nbsp;Сортировать по
             </button>
             
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><button class="dropdown-item" @onclick="OnDescAlphabet" >Имени</button></li>
+                <li><button class="dropdown-item" @onclick="OnDescAlphabet">Имени</button></li>
                 <li><button class="dropdown-item" @onclick="OnCategorySortCatsDogs">Кошки-Собаки</button></li>
                 <li><button class="dropdown-item" @onclick="OnCategorySortDogsCats">Собаки-Кошки</button></li>
                 <li><button class="dropdown-item" @onclick="OnSortGender">По полу</button></li>
@@ -64,7 +66,8 @@ else
         </div>
 
         <p class="buttons">
-            <button type="button" class="btn btn-success" @onclick="OnViewClientsOrders">Заявок на сегодня: 
+            <button type="button" class="btn btn-success" @onclick="OnViewClientsOrders">
+                <i class="fa-sharp fa-solid fa-folder-open"></i>&nbsp;&nbsp;Заявок на сегодня:
                 <span>
                    @clientOrdersCount
                 </span>
