@@ -2,7 +2,6 @@
 @inject NavigationManager NavigationManager
 <link href="css/MyStyle.css" rel="stylesheet" />
 
-
 <Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
     <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
         <Authorized>        
@@ -28,11 +27,15 @@
                     <ul class="navbar-nav login-position">
 
                     <li class="nav-item" style="margin:10px">
-                        <a class="btn btn-primary" style="color:white;" href="Identity/Account/Register">Зарегистрироваться</a>
+                        <a class="btn btn-primary" style="color:white;" href="Identity/Account/Register">
+                            <i class="fa-solid fa-user-plus"> &nbsp;</i>Зарегистрироваться
+                        </a>
                         </li>
 
                     <li class="nav-item" style="margin:10px">
-                            <a class="btn btn-success" href="Identity/Account/Login">Войти</a>
+                            <a class="btn btn-success" href="Identity/Account/Login">
+                            &nbsp;Войти
+                        </a>
                         </li>
 
                     </ul>

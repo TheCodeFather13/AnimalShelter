@@ -208,12 +208,12 @@ else
     }
 
     private void OnSortNoVaccination()
-    {
-        animals = searchAnimalData.OrderBy(x => !x.IsVaccinated == false).ToList();
+    {       
+        animals = searchAnimalData.OrderBy(x => x.IsVaccinated).ToList();      
     }
 
     private void OnSortVaccination()
-    {
-        animals = searchAnimalData.OrderBy(x => !x.IsVaccinated == true).ToList();
+    {     
+        animals = searchAnimalData.OrderByDescending(x => x.IsVaccinated).ToList();
     }
 }
