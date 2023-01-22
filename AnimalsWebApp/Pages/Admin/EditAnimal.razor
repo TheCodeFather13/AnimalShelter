@@ -96,7 +96,7 @@ else
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fa-solid fa-calendar-days"></i>
                                             <label for="dayOfPublication">День публикации: </label>
-                                            <input type="date" id="dayOfPublication" @bind="dayOfPublication"></input>
+                                            <input type="date" textmode="dayOfPublication" id="dayOfPublication" @bind="dayOfPublication"></input>
                                         </div>
                                     </div>
 
@@ -106,18 +106,8 @@ else
                                             <label for="images">Вставить фотку</label>
                                             &nbsp;
                                             @*<InputFile OnChange="OnFileChange" class="form-label"></InputFile>*@
-
-                                            @if (!string.IsNullOrEmpty(animal.ImagePath))
-                                            {
-                                                <img src="@animal.ImagePath" class="imgForAnimals" />
-                                            }
-                                            else
-                                            {
-                                                foreach (var image in animal.Images)
-                                                {
-                                                    <img src="@image.Data" class="imgForAnimals" />
-                                                }
-                                            }
+                                         
+                                                <img src="@animal.ImagePath" class="imgForAnimals" />                                           
 
                                             <InputFile id="uploadBox" OnChange="OnFileChange" class="form-label"></InputFile>
                                         </div>
@@ -125,7 +115,7 @@ else
 
 
                                     <div class="d-flex flex-row align-items-center mb-4">
-                                        <button class="btn btn-success" onlick="return validateInput()" type="submit">
+                                        <button class="btn btn-success" onclick="return validateInput()" type="submit">
                                             <i class="fa-solid fa-share-from-square"></i> &nbsp;Сохранить редактирование
                                         </button>
                                     </div>
@@ -195,9 +185,9 @@ else
 
     private async Task OnValidSubmit(EditContext context)
     {
+        await JSRuntime.InvokeVoidAsync("validateInput", "error");
         if (context.Validate())
-        {
-            await JSRuntime.InvokeVoidAsync("validateInput", "error");
+        {           
             EditAnimalUseCase.Execute(this.animal);
             displayValidationErrorMessages = false;
             displayUserAddedToDB = true;

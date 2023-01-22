@@ -109,24 +109,15 @@ else
                                             <label for="imagePath">Вставить фотку</label>
                                             &nbsp;
                                            @* <InputFile OnChange="OnFileChange" class="form-label"></InputFile>*@
-
-                                            @if (!string.IsNullOrEmpty(animal.ImagePath))
-                                            {
-                                                <img src="@animal.ImagePath" class="imgForAnimals" />
-                                            }
-                                            else
-                                            {
-                                                foreach (var image in animal.Images)
-                                                {
-                                                    <img src="@image.Data" class="imgForAnimals" />
-                                                }
-                                            }
+                                           
+                                             <img src="@animal.ImagePath" class="imgForAnimals" />
+                                                                                     
                                             <InputFile id="uploadBox" OnChange="OnFileChange" class="form-label"></InputFile>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">                                      
-                                        <button class="btn btn-success" type="submit" onlick="return validateInput()">
+                                        <button class="btn btn-success" type="submit" onclick="return validateInput()">
                                             <i class="fa-solid fa-share-from-square"></i> &nbsp;Сохранить
                                         </button>
                                        
@@ -173,10 +164,10 @@ else
     }
 
     private async Task OnValidSubmit(EditContext context)
-    {
+    { 
+        await JSRuntime.InvokeVoidAsync("validateInput", "error");
         if(context.Validate())
-        {        
-            await JSRuntime.InvokeVoidAsync("validateInput", "error");
+        {                 
             AddAnimalUseCase.AddAnimal(animal);
             displayValidationErrorMessages = false;
             displayUserAddedToDB = true;

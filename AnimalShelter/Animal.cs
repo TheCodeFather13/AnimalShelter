@@ -20,6 +20,7 @@ namespace AnimalShelter
         public string Age { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/ddTHH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DayOfPublication { get; set; }
 
         [Required]
@@ -27,9 +28,7 @@ namespace AnimalShelter
       
         public string ImagePath { get; set; }
 
-        public bool IsVaccinated { get; set; }
-       
-        public List<AnimalImage> Images { get; set; } = new List<AnimalImage>();
+        public bool IsVaccinated { get; set; }      
 
         public Category Category { get; set; }
     }

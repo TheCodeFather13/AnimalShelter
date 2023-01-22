@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plugins.DataAnimals.Sql.Repositories;
 
@@ -11,9 +12,11 @@ using Plugins.DataAnimals.Sql.Repositories;
 namespace Plugins.DataAnimals.Sql.Repositories.Migrations
 {
     [DbContext(typeof(AnimalShelterDbContext))]
-    partial class AnimalShelterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230121181133_AddSections")]
+    partial class AddSections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,6 +67,44 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Animals");
+
+                    b.HasData(
+                        new
+                        {
+                            AnimalId = 1,
+                            Age = "1 месяц",
+                            CategoryId = 1,
+                            Contacts = "Maria 079245611",
+                            DayOfPublication = new DateTime(2023, 1, 21, 18, 11, 33, 237, DateTimeKind.Utc).AddTicks(1673),
+                            Gender = "Female",
+                            ImagePath = "css/Images/Cat1.jpg",
+                            IsVaccinated = false,
+                            Name = "Муся"
+                        },
+                        new
+                        {
+                            AnimalId = 2,
+                            Age = "5 месяцев",
+                            CategoryId = 1,
+                            Contacts = "Svetlana 069367315",
+                            DayOfPublication = new DateTime(2023, 1, 21, 18, 11, 33, 237, DateTimeKind.Utc).AddTicks(1675),
+                            Gender = "Male",
+                            ImagePath = "css/Images/Cat2.jpg",
+                            IsVaccinated = false,
+                            Name = "Вася"
+                        },
+                        new
+                        {
+                            AnimalId = 3,
+                            Age = "1 год",
+                            CategoryId = 1,
+                            Contacts = "Georgii 079996377",
+                            DayOfPublication = new DateTime(2023, 1, 21, 18, 11, 33, 237, DateTimeKind.Utc).AddTicks(1676),
+                            Gender = "Female",
+                            ImagePath = "css/Images/Cat3.jpg",
+                            IsVaccinated = false,
+                            Name = "Бусинка"
+                        });
                 });
 
             modelBuilder.Entity("AnimalShelterCore.Category", b =>
@@ -175,15 +216,15 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "74e2e38b-743a-4ea3-b6de-b5327777a901",
-                            ConcurrencyStamp = "eaa11c74-92ff-4a7a-b30c-b4972224596c",
+                            Id = "c7c974fa-b52d-4b51-82f5-682df2ddce67",
+                            ConcurrencyStamp = "a6677bba-41ab-4863-b083-8f79e95616c4",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "30b835e5-b0b7-44b3-a8c6-b758e4882443",
-                            ConcurrencyStamp = "ba38d98d-d917-4db0-9930-27d11bc2464f",
+                            Id = "a5762e32-a7a6-4573-955e-0b3d0fe0eb31",
+                            ConcurrencyStamp = "9c092d22-ef96-4ae4-9054-dd55719c9b61",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

@@ -20,14 +20,19 @@ namespace Plugins.DataAnimals.Sql.Repositories
 
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<ClientOrder> ClientOrders { get; set; }
-        public DbSet<AnimalImage> Images { get; set; }
+        public DbSet<ClientOrder> ClientOrders { get; set; }       
+
+        public DbSet<Section> Sections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            IdentityRole identityRole = new IdentityRole();
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
+
+          //  modelBuilder.Entity<UserLoginInfo>().HasData(new IdentityUserRole { RoleId = identityRole.Id.Where(identityRole.Name == "Admin"), UserId = "749bbe1e-d5f4-45f6-93ba-4d036ccccc22" });
+            
             modelBuilder.Entity<Category>()
                 .HasMany(x => x.Animals)
                 .WithOne(y => y.Category)
@@ -45,45 +50,7 @@ namespace Plugins.DataAnimals.Sql.Repositories
                     CategoryId = 2,
                     Name = "Dogs"
                 }
-            );
-
-            modelBuilder.Entity<Animal>().HasData(
-                new Animal()
-                {
-                    AnimalId = 1,
-                    CategoryId = 1,
-                    Name = "Муся",
-                    Gender = "Female",
-                    Age = "1 месяц",
-                    DayOfPublication = DateTime.UtcNow,
-                    Contacts = "Maria 079245611",
-                    ImagePath = "css/Images/Cat1.jpg"
-                },
-
-                 new Animal()
-                 {
-                     AnimalId = 2,
-                     CategoryId = 1,
-                     Name = "Вася",
-                     Gender = "Male",
-                     Age = "5 месяцев",
-                     DayOfPublication = DateTime.UtcNow,
-                     Contacts = "Svetlana 069367315",
-                     ImagePath = "css/Images/Cat2.jpg"
-                 },
-
-                  new Animal()
-                  {
-                      AnimalId = 3,
-                      CategoryId = 1,
-                      Name = "Бусинка",
-                      Gender = "Female",
-                      Age = "1 год",
-                      DayOfPublication = DateTime.UtcNow,
-                      Contacts = "Georgii 079996377",
-                      ImagePath = "css/Images/Cat3.jpg"
-                  }
-                );
+            );       
         }
     }
 }

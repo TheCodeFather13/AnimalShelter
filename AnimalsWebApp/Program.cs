@@ -12,6 +12,8 @@ using UseCases.UseCasesInterfaces;
 using Microsoft.AspNetCore.Identity;
 using UseCases.ClientOrderUseCasesInterfaces;
 using UseCases.ClientOrderUseCase;
+using UseCases.SectionUseCasesInterfaces;
+using UseCases.SectionUseCase;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -33,6 +35,7 @@ builder.Services
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IClientOrderRepository, ClientRepository>();
+builder.Services.AddScoped<ISectionRepository, SectionRepository>();
 
 // Category UseCase
 builder.Services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
@@ -55,6 +58,13 @@ builder.Services.AddTransient<IGetClientOrderByIdUseCase, GetClientOrderByIdUseC
 builder.Services.AddTransient<IViewClientOrderUseCase, ViewClientOrderUseCase>();
 builder.Services.AddTransient<IEditClientOrderUseCase, EditClientOrderUseCase>();
 builder.Services.AddTransient<IGetClientOrderCountUseCase, GetClientOrderCountUseCase>();
+
+// Section UseCase
+builder.Services.AddTransient<IAddSectionUseCase, AddSectionUseCase>();
+builder.Services.AddTransient<IDeleteSectionUseCase, DeleteSectionUseCase>();
+builder.Services.AddTransient<IGetSectionByIdUseCase, GetSectionByIdUseCase>();
+builder.Services.AddTransient<IViewSectionsUseCase, ViewSectionsUseCase>();
+builder.Services.AddTransient<IEditSectionUseCase, EditSectionUseCase>();
 
 // Register Blazorise.Bootstrap, fontawesome
 builder.Services.AddBlazorise(options => { options.Immediate = true; })
