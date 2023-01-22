@@ -22,7 +22,7 @@
     <SpinnerComponent></SpinnerComponent>
 }
 else
-{
+{    
       <div class="input-group col buttons">
         <p class="buttons">
             <button type="button" class="btn btn-success" @onclick="OnAddAnimal">
@@ -31,10 +31,16 @@ else
         </p>
 
         <p class="buttons">
-            <button type="button" class="btn btn-success" @onclick="OnAddCategory">
-                <i class="fa-solid fa-briefcase"></i>&nbsp;&nbsp;Работа с категориями
+            <button type="button" class="btn btn-success" @onclick="OnAddSection">
+                <i class="fa-solid fa-plus"></i>&nbsp; Добавить статью
             </button>
         </p>
+
+        <p class="buttons">
+            <button type="button" class="btn btn-success" @onclick="OnAddCategory">
+                <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Работа с категориями
+            </button>
+        </p>    
 
         <p class="buttons">
             <input type="text" size="23" class="form-control" placeholder="Искать животное по имени" @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
@@ -109,7 +115,7 @@ else
                         <td>@animal.Name</td>
                         <td>@animal.Gender</td>
                         <td>@animal.Age</td>
-                        <td>@animal.DayOfPublication.ToLongDateString()</td>
+                        <td>@animal.DayOfPublication.ToShortDateString()</td>
                         <td>@animal.Contacts</td>
                         <td>
                             <button class="btn btn-danger" @onclick="@(() => OnDeleteAnimal(animal.AnimalId))">Удалить</button>
@@ -159,6 +165,11 @@ else
     public void OnAddAnimal()
     {
         NavigationManager.NavigateTo("/addanimal");
+    }
+
+    private void OnAddSection()
+    {
+        NavigationManager.NavigateTo("/addsection");
     }
 
     protected override void OnInitialized()

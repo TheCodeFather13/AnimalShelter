@@ -20,7 +20,7 @@ namespace AnimalShelter
         public string Age { get; set; }
 
         [Required]
-        public DateTime DayOfPublication { get; set; }
+        public DateTime DayOfPublication { get; set; } = DateTime.Now;
 
         [Required]
         public string Contacts { get; set; }

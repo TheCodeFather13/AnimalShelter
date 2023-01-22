@@ -1,70 +1,51 @@
 ﻿@page "/sections"
+@using AnimalShelterCore;
+@using UseCases.DataAnimalsPluginInterfaces;
+@using UseCases.SectionUseCasesInterfaces;
 
 @inject NavigationManager NavigationManager
+@inject ISectionRepository SectionRepository
+@inject IViewSectionsUseCase ViewSectionsUseCase
 
 
 <h2 class="bgForOl" style="margin:10px;text-align:center;border-radius:5px;padding:8px;">Полезные статьи</h2>
 
-<div class="flexForImg">   
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToCatTray"><span style="color:black;margin-bottom:5px;">КАК ПРИУЧИТЬ КОШКУ К ЛОТКУ</span></a>
-        <br />
-        <img src="/css/Images/CatSections1.jpg" alt="cat" class="imgForAnimals" @onclick="OnGoToCatTray" />
-    </p>
-   
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToDogForChildren"><span style="color:black;margin-bottom:5px;">СОБАКА ДЛЯ ДЕТЕЙ</span></a>
-        <br />
-        <img src="/css/Images/DogForChildren.jpg" alt="dog" class="imgForAnimals" @onclick="OnGoToDogForChildren" />
-    </p>
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToCatToys"><span style="color:black;">ИГРУШКИ ДЛЯ КОШЕК: ВИДЫ, ВЫБОР</span></a>
-        <br />
-        <img src="/css/Images/CatSectionsToys.jpeg" alt="cat" class="imgForAnimals" @onclick="OnGoToCatToys" />
-    </p>
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToDogExhibition"><span style="color:black;">КАК ПОДГОТОВИТЬ СОБАКУ К ВЫСТАВКЕ</span></a>
-        <br />
-        <img src="/css/Images/DogExhibition.jpg" alt="dog" class="imgForAnimals" @onclick="OnGoToDogExhibition" />
-    </p>
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToCatIntoxication"><span style="color:black;">ОТРАВЛЕНИЕ У КОШКИ</span></a>
-        <br />
-        <img src="/css/Images/CatIntoxication.jpg" alt="cat" class="imgForAnimals" @onclick="OnGoToCatIntoxication" />
-    </p>
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToDogVaccination"><span style="color:black;">ПРИВИВКИ ДЛЯ СОБАК</span></a>
-        <br />
-        <img src="/css/Images/DogVaccination.jpg" alt="dog" class="imgForAnimals" @onclick="OnGoToDogVaccination" />
-    </p>
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToCatFood"><span style="color:black;">ЧЕМ КОРМИТЬ КОТЕНКА?</span>
-        </a>
-        <br />
-        <img src="/css/Images/CatFood.jpg" alt="cat" class="imgForAnimals" @onclick="OnGoToCatFood" />
-    </p>
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToDogTravel"><span style="color:black;">КАК ПЕРЕВОЗИТЬ СОБАКУ</span></a>
-        <br />
-        <img src="/css/Images/DogTravel.jpg" alt="dog" class="imgForAnimals" @onclick="OnGoToDogTravel" />
-    </p>
-
-    <p class="flexForImg2">
-        <a class="btn btn-outline-info" @onclick="OnGoToCatPregnant"><span style="color:black;">БЕРЕМЕННОСТЬ КОШКИ</span></a>
-        <br />
-        <img src="/css/Images/CatPregnant.jpg" alt="cat" class="imgForAnimals" @onclick="OnGoToCatPregnant" />
-    </p>
-</div>
-
+@if(sections == null)
+{
+    <h2 class="bgForOl" style="margin:10px;text-align:center;border-radius:5px;padding:8px;">Страница статей пуста!</h2>
+}
+else
+{
+   <div class="flexForImg">
+        @foreach(var section in sections)
+        {
+            <div class="flexForImg2">
+                <div class="containerForAnimalsDescription">
+                    <h4 style="text-align:center;padding:5px">@(section.Title)</h4>
+                    <button class="btn btn-info" @onclick="@(() => OnInfoSection(section))">Узнать</button>
+                </div>
+                <img src="@(section.ImagePath)" class="imgForAnimals" />
+            </div>
+        }
+    </div>
+}
 
 @code {
+
+    private IEnumerable<Section> sections;
+    protected List<Section> searchSectionData = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        sections = ViewSectionsUseCase.Execute();
+        searchSectionData = sections.ToList();    
+    }
+
+    private void OnInfoSection(Section section)
+    {
+        NavigationManager.NavigateTo($"/sectioninfo/{section.SectionId}");
+    }
 
     private void OnGoToDogTravel()
     {

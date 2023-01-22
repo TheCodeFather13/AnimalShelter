@@ -99,7 +99,7 @@ else
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fa-solid fa-calendar-days"></i>
                                             <label for="dayOfPublication">День публикации: </label>
-                                            <InputDate id="dayOfPublication" @bind-Value="animal.DayOfPublication"></InputDate>
+                                             <input type="date" id="dayOfPublication" @bind-value="animal.DayOfPublication"></input>
                                         </div>
                                     </div>
 
@@ -149,7 +149,7 @@ else
 @code {
     private Animal animal;
     private IEnumerable<Category> categories;
-    private string dayOfPublication;
+   // private string dayOfPublication = DateTime.UtcNow.ToString("dd/MM/yyyy");
 
     bool displayValidationErrorMessages = false;
     bool displayUserAddedToDB = false;  
@@ -158,7 +158,7 @@ else
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        dayOfPublication = DateTime.Now.ToLongDateString();
+    //    dayOfPublication = DateTime.UtcNow.ToString("dd/MM/yyyy");
         animal = new Animal();
         categories = ViewCategoriesUseCase.Execute();
     }

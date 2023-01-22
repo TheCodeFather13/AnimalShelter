@@ -19,6 +19,6 @@ namespace AnimalShelterCore
 
         [Required]   
         public string ImagePath { get; set; }
-        public DateTime PublicDate { get; set; }
+        public DateTime PublicDate { get; set; } = DateTime.Now;
     }
 }
