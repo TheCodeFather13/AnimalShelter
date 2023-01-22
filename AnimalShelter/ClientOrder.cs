@@ -21,6 +21,7 @@ namespace AnimalShelterCore
         [Required]
         [MaxLength(30, ErrorMessage = "Максимальная длина 30 символов"), MinLength(5, ErrorMessage = "Минимальная длина 5 символов")]       
         public string Contacts { get; set; }
-      
+
+        public string animalId { get; set; }
     }
 }

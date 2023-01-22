@@ -1,24 +1,30 @@
 ﻿@page "/clientorders"
+@using AnimalShelter;
 @using AnimalShelterCore;
+@using UseCases.AnimalUseCasesInterfaces;
 @using UseCases.ClientOrderUseCasesInterfaces;
 
 @inject NavigationManager NavigationManager
 @inject IAddClientOrderUseCase AddClientOrderUseCase
 @inject IRemoveClientOrderUseCase RemoveClientOrderUseCase
 @inject IViewClientOrderUseCase ViewClientOrderUseCase
+@inject IGetAnimalByIdUseCase GetAnimalByIdUseCase
 
 <table class="table table-bordered table-striped" style="width:100%">
     <thead>
         <tr>         
-            <th width="10%">ID</th>
+            <th width="10%">ID Животного</th>
+            <th width="10%">ID Заявки</th>
             <th width="25%">Имя</th>
-            <th width="65%">Контакты</th>
+            <th width="55%">Контакты</th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var clientOrder in clientOrders)
         {
-            <tr>                  
+            <tr>               
+                <td>@clientOrder.animalId</td>               
                 <td>@clientOrder.ClientOrderId</td>
                 <td>@clientOrder.Name</td>
                 <td>
@@ -33,12 +39,14 @@
 </table>
 
 @code {
-    private IEnumerable<ClientOrder>? clientOrders;
+    private IEnumerable<ClientOrder>? clientOrders;   
+
+    private Animal animal;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        clientOrders = ViewClientOrderUseCase.Execute();
+        clientOrders = ViewClientOrderUseCase.Execute();      
     }
 
     //protected override void OnAfterRender(bool firstRender) Обновляет страницу сам

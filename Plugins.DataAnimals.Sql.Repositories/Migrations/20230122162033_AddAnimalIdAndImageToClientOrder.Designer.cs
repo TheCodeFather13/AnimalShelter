@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plugins.DataAnimals.Sql.Repositories;
 
@@ -11,9 +12,11 @@ using Plugins.DataAnimals.Sql.Repositories;
 namespace Plugins.DataAnimals.Sql.Repositories.Migrations
 {
     [DbContext(typeof(AnimalShelterDbContext))]
-    partial class AnimalShelterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230122162033_AddAnimalIdAndImageToClientOrder")]
+    partial class AddAnimalIdAndImageToClientOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,15 +186,15 @@ namespace Plugins.DataAnimals.Sql.Repositories.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8539790f-dfef-4a58-8f0f-bfca4407766c",
-                            ConcurrencyStamp = "a9a80cd4-71ed-43c1-8c21-46e1fcb9be0f",
+                            Id = "1b11f1c9-42df-4ce6-bdc9-2d682d1c5ef5",
+                            ConcurrencyStamp = "4d79cfda-8127-4ac1-a405-9bb04b2ea4c3",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "698ea1dc-9b9c-4d8f-96e5-b3f9ade0c5de",
-                            ConcurrencyStamp = "9bb25d83-f691-4254-9f36-695f0e43399e",
+                            Id = "37f152e2-7c20-49fe-9dfa-cac315440d28",
+                            ConcurrencyStamp = "1bee4f9e-b069-4ca2-a5e0-97df808de4c4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

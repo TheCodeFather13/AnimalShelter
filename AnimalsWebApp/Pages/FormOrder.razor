@@ -32,7 +32,7 @@
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
-                                        <h4>Вы выбрали животное с ID : @this.AnimalId</h4>                                      
+                                        <h4>Вы выбрали животное с ID : @this.AnimalId</h4>                                         
                                     </div>
                                 </div>
 
@@ -73,12 +73,14 @@
 
     private Animal animal;
     private ClientOrder order;
+   
 
-    private string GetId(string id)
-    {
-        id = this.AnimalId;
-        return id;
-    }
+
+    //private string GetId(string id)
+    //{
+    //    id = this.AnimalId;
+    //    return id;
+    //}
 
     //protected override void OnParametersSet()
     //{
@@ -92,8 +94,8 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        order = new ClientOrder();
-
+        order = new ClientOrder();     
+        order.animalId = this.AnimalId;
     }
 
     //protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -104,6 +106,7 @@
 
     private void OnValidSubmit()
     {
+        
         AddClientOrderUseCase.AddClientOrder(order);
         NavigationManager.NavigateTo("/");
     }
