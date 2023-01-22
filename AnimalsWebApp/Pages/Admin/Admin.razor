@@ -109,7 +109,7 @@ else
                         <td>@animal.Name</td>
                         <td>@animal.Gender</td>
                         <td>@animal.Age</td>
-                        <td>@animal.DayOfPublication</td>
+                        <td>@animal.DayOfPublication.ToLongDateString()</td>
                         <td>@animal.Contacts</td>
                         <td>
                             <button class="btn btn-danger" @onclick="@(() => OnDeleteAnimal(animal.AnimalId))">Удалить</button>

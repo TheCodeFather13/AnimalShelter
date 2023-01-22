@@ -20,7 +20,6 @@ namespace AnimalShelter
         public string Age { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/ddTHH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DayOfPublication { get; set; }
 
         [Required]

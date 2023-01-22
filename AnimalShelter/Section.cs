@@ -17,8 +17,7 @@ namespace AnimalShelterCore
         [Required]
         public string MainText { get; set; }
 
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/ddTHH:mm}", ApplyFormatInEditMode = true)]
+        [Required]   
         public string ImagePath { get; set; }
         public DateTime PublicDate { get; set; }
     }
