@@ -10,7 +10,8 @@ namespace UseCases.DataAnimalsPluginInterfaces
 {
     public interface ISectionRepository
     {
-        IEnumerable<Section> GetSections();
+        IEnumerable<Section> GetSections();     
+        Section GetSection(string sectionId);
         void AddSection(Section section);
         void Update(Section section);
         Section GetSectionById(int id);

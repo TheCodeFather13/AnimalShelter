@@ -65,6 +65,7 @@ builder.Services.AddTransient<IDeleteSectionUseCase, DeleteSectionUseCase>();
 builder.Services.AddTransient<IGetSectionByIdUseCase, GetSectionByIdUseCase>();
 builder.Services.AddTransient<IViewSectionsUseCase, ViewSectionsUseCase>();
 builder.Services.AddTransient<IEditSectionUseCase, EditSectionUseCase>();
+builder.Services.AddTransient<IViewSectionUseCase, ViewSectionUseCase>();
 
 // Register Blazorise.Bootstrap, fontawesome
 builder.Services.AddBlazorise(options => { options.Immediate = true; })

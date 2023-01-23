@@ -52,6 +52,11 @@ namespace Plugins.DataAnimals.Sql.Repositories.Repositories
             }
         }
 
+        public Section GetSection(string sectionId)
+        {
+            return _animalShelterDbContext.Sections.SingleOrDefault(x => x.SectionId.ToString() == sectionId);
+        }
+
         public Section GetSectionById(int id)
         {
             return _animalShelterDbContext.Sections.Find(id);

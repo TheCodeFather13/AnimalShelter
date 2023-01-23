@@ -5,22 +5,22 @@
 
 @inject NavigationManager NavigationManager
 @inject ISectionRepository SectionRepository
-@inject IViewSectionsUseCase ViewSectionsUseCase
 
-@foreach(var section in sections)
-{
-    <p>@(section.MainText)</p>
-}
+
+  <p>@(section.MainText)</p>
+
 
 @code {
     [Parameter]
     public string SectionId { get; set; }
+
     private Section section;
     private IEnumerable<Section> sections;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        sections = ViewSectionsUseCase.Execute();
+
+        section = SectionRepository.GetSection(SectionId);
     }
 }
