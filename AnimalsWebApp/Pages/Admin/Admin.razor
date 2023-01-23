@@ -54,6 +54,18 @@ else
             }
         </p>
 
+        <p class="buttons">
+            <input type="text" size="23" class="form-control" placeholder="Искать животное по ID" @bind="SearchStringId" @bind:event="oninput" @onkeyup="FilterUserId" />
+            @if (SearchStringId.Length > 0)
+            {
+                <div class="input-group-append">
+                    <button class="btn btn-danger" @onclick="ResetSearchId">
+                        <i class="fas fa-times">Отменить поиск</i>
+                    </button>
+                </div>
+            }
+        </p>
+
         <div class="dropdown">
             
             <button class="btn btn-secondary dropdown-toggle buttons" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,6 +98,7 @@ else
             <thead>
                 <tr>
                     <th>Фото</th>
+                    <th>ID</th>
                     <th>Вакцинация</th>
                     <th>Категория</th>
                     <th>Имя</th>
@@ -101,6 +114,7 @@ else
                 {
                     <tr>
                         <td><img src="@animal.ImagePath" alt="" class="imgForAnimals" /></td>
+                        <td>@animal.AnimalId</td>
                     <td>
                         @if (animal.IsVaccinated == true)
                         {
@@ -132,6 +146,7 @@ else
     private int clientOrdersCount;
     protected List<Animal> searchAnimalData = new();    
     protected string SearchString { get; set; } = string.Empty;
+    protected string SearchStringId { get; set; } = string.Empty;
 
     private void OnViewClientsOrders()
     {      
@@ -146,6 +161,15 @@ else
         }
     }
 
+    protected void FilterUserId()
+    {
+        if (!string.IsNullOrEmpty(SearchStringId))
+        {
+            // Идеально ищет с какой цифры начинается, тот ID и показывает. По сути если набрать буквы, то ничего не покажет
+            animals = searchAnimalData.Where(x => x.AnimalId.ToString().StartsWith(SearchStringId));
+        }
+    }
+
     private void OnAddCategory()
     {
         NavigationManager.NavigateTo("category");
@@ -154,6 +178,12 @@ else
     public void ResetSearch()
     {
         SearchString = string.Empty;
+        animals = searchAnimalData;
+    }
+
+    public void ResetSearchId()
+    {
+        SearchStringId = string.Empty;
         animals = searchAnimalData;
     }
 
