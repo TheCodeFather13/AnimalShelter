@@ -2,10 +2,13 @@
 @using AnimalShelterCore;
 @using UseCases.DataAnimalsPluginInterfaces;
 @using UseCases.SectionUseCasesInterfaces;
+@using Microsoft.AspNetCore.Components.Authorization
 
 @inject NavigationManager NavigationManager
 @inject ISectionRepository SectionRepository
 @inject IViewSectionsUseCase ViewSectionsUseCase
+@inject IJSRuntime JSRuntime
+@inject IDeleteSectionUseCase DeleteSectionUseCase
 
 
 <h2 class="bgForOl" style="margin:10px;text-align:center;border-radius:5px;padding:8px;">Полезные статьи</h2>
@@ -23,6 +26,11 @@ else
                 <div class="containerForAnimalsDescription">
                     <h4 style="text-align:center;padding:5px">@(section.Title)</h4>
                     <button class="btn btn-info" @onclick="@(() => OnInfoSection(section))">Узнать</button>
+                     <CascadingAuthenticationState>
+                    <AuthorizeView Roles="Admin">
+                    <button class="btn btn-info" @onclick="@(() => OnDeleteSection(section.SectionId))">Удалить</button>  
+                    </AuthorizeView>
+                    </CascadingAuthenticationState>
                 </div>
                 <img src="@(section.ImagePath)" class="imgForAnimals" />
             </div>
@@ -41,6 +49,17 @@ else
         sections = ViewSectionsUseCase.Execute();
         searchSectionData = sections.ToList();    
     }
+
+        private async Task OnDeleteSection(int sectionId)
+        {
+            bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Вы уверены?");
+
+            if (confirmed)
+            {
+                DeleteSectionUseCase.Delete(sectionId);
+                NavigationManager.NavigateTo("/sections", true);
+            }
+        }
 
     private void OnInfoSection(Section section)
     {

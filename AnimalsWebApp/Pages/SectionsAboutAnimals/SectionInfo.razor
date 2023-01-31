@@ -6,9 +6,10 @@
 @inject NavigationManager NavigationManager
 @inject ISectionRepository SectionRepository
 
-
-  <p>@(section.MainText)</p>
-
+<h2 class="bgForOl" style="margin:10px;text-align:center;border-radius:5px;padding:8px;">@((MarkupString)section.Title)</h2>
+<img src="@(section.ImagePath)" alt="" class="imgForAnimals center" />
+<br />
+<div class="center">@((MarkupString)section.MainText)</div>
 
 @code {
     [Parameter]
