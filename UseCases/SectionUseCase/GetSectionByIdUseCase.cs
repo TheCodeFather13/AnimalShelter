@@ -17,7 +17,7 @@ namespace UseCases.SectionUseCase
         {
             _sectionRepository = sectionRepository;
         }
-        public Section GetAnimalById(int sectionId)
+        public Section GetSectionById(int sectionId)
         {
             return _sectionRepository.GetSectionById(sectionId);
         }

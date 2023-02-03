@@ -10,6 +10,6 @@ namespace UseCases.SectionUseCasesInterfaces
 {
     public interface IGetSectionByIdUseCase
     {
-        Section GetAnimalById(int sectionId);
+        Section GetSectionById(int sectionId);
     }
 }

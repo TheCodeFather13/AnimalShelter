@@ -25,11 +25,12 @@ else
             <div class="flexForImg2">
                 <div class="containerForAnimalsDescription">
                     <h4 style="text-align:center;padding:5px">@(section.Title)</h4>
-                    <button class="btn btn-info" @onclick="@(() => OnInfoSection(section))">Узнать</button>
+                    <button class="btn btn-success" @onclick="@(() => OnInfoSection(section))" style="margin:0 5px 15px 0">Подробнее</button>
                      <CascadingAuthenticationState>
                     <AuthorizeView Roles="Admin">
-                    <button class="btn btn-info" @onclick="@(() => OnDeleteSection(section.SectionId))">Удалить</button>  
-                    </AuthorizeView>
+                            <button class="btn btn-danger" @onclick="@(() => OnDeleteSection(section.SectionId))" style="margin:0 5px 15px 0">Удалить</button>
+                            <button class="btn btn-info" @onclick="@(() => OnEditSection(section))" style="margin:0 0 15px 0">Редактировать</button>
+                        </AuthorizeView>
                     </CascadingAuthenticationState>
                 </div>
                 <img src="@(section.ImagePath)" class="imgForAnimals" />
@@ -50,16 +51,21 @@ else
         searchSectionData = sections.ToList();    
     }
 
-        private async Task OnDeleteSection(int sectionId)
-        {
-            bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Вы уверены?");
+    private async Task OnDeleteSection(int sectionId)
+    {
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Вы уверены?");
 
-            if (confirmed)
-            {
-                DeleteSectionUseCase.Delete(sectionId);
-                NavigationManager.NavigateTo("/sections", true);
-            }
+        if (confirmed)
+        {
+            DeleteSectionUseCase.Delete(sectionId);
+            NavigationManager.NavigateTo("/sections", true);
         }
+    }
+
+    private void OnEditSection(Section section)
+    {
+        NavigationManager.NavigateTo($"/editsection/{section.SectionId}");
+    }
 
     private void OnInfoSection(Section section)
     {

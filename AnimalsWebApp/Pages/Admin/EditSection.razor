@@ -1,0 +1,162 @@
+﻿@page "/editsection/{sectionId}"
+@using AnimalShelterCore;
+@using Microsoft.AspNetCore.Components.Forms;
+@using UseCases.DataAnimalsPluginInterfaces;
+@using UseCases.SectionUseCasesInterfaces;
+
+@inject NavigationManager NavigationManager
+@inject IEditSectionUseCase EditSectionUseCase
+@inject IGetSectionByIdUseCase GetSectionByIdUseCase
+@inject ISectionRepository SectionRepository
+@inject IJSRuntime JSRuntime
+
+<div class="line"></div>
+
+@if (section == null)
+{
+    <SpinnerComponent></SpinnerComponent>
+}
+else
+{
+    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+        <button class="btn btn-danger" @onclick="OnCancel">Назад</button>
+    </p>
+    <Microsoft.AspNetCore.Components.Forms.EditForm Model="section" OnValidSubmit="OnValidSubmit" class="mx-1 mx-md-4" enctype="form-data">
+        <Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator></Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator>
+        <Microsoft.AspNetCore.Components.Forms.ValidationSummary></Microsoft.AspNetCore.Components.Forms.ValidationSummary>
+
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Редактировать статью: </p>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <i class="fas fa-user fa-lg fa-fw"></i>
+                                            <label for="title" class="form-label">Заголовок: </label>
+                                            <InputText id="title" @bind-Value="section.Title" class="form-control" placeholder="Введите заголовок"></InputText>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-cake-candles"></i>
+                                            <label for="maintext" class="form-label">Основной текст: </label>
+                                            <BlazingComponents.Summernote.Editor @bind-Content="section.MainText"></BlazingComponents.Summernote.Editor>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            <label for="dayOfPublication">День публикации: </label>
+                                            <input type="date" id="dayOfPublication" @bind-value="section.PublicDate"></input>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <i class="fa-solid fa-camera-retro"></i>
+                                            <label for="imagePath">Вставить фотку</label>&nbsp;
+                                            <img src="@(section.ImagePath)" class="imgForAnimals" />
+                                            <InputFile id="uploadBox" OnChange="OnFileChange" class="form-label"></InputFile>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <button class="btn btn-success" type="submit">
+                                            <i class="fa-solid fa-share-from-square"></i> &nbsp;Сохранить
+                                        </button>
+
+                                    </div>
+
+                                    @if (displayValidationErrorMessages)
+                                    {
+                                        <div class="col-md-4" style="margin-top:200px">
+                                            <label>Ошибка: </label>
+                                            <ValidationSummary />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Microsoft.AspNetCore.Components.Forms.EditForm>
+}
+
+@code {
+    [Parameter]
+    public string SectionId { get; set; }
+    private Section section;
+
+    bool displayValidationErrorMessages = false;
+    bool displayUserAddedToDB = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        section = new Section();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (int.TryParse(this.SectionId, out int isectionId))
+        {
+            var sect = GetSectionByIdUseCase.GetSectionById(isectionId);
+            section = new Section
+                {
+                    SectionId = sect.SectionId,
+                    Title = sect.Title,
+                    MainText = sect.MainText,
+                    ImagePath = sect.ImagePath,
+                    PublicDate = sect.PublicDate
+                };
+        }
+    }
+
+    private void OnValidSubmit(EditContext context)
+    {
+        if (context.Validate())
+        {
+            EditSectionUseCase.Execute(section);
+            displayValidationErrorMessages = false;
+            displayUserAddedToDB = true;
+            NavigationManager.NavigateTo("/sections");
+        }
+        else
+        {
+            displayValidationErrorMessages = true;
+            displayUserAddedToDB = false;
+        }
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        using MemoryStream ms = new();
+        var resized = await e.File.RequestImageFileAsync(e.File.ContentType, maxWidth: 500, maxHeight: 500);
+        using Stream fileStream = resized.OpenReadStream();
+        await fileStream.CopyToAsync(ms);
+
+        // Получаем конечный запрашиваемый файл
+        var fileString = $"data:{e.File.ContentType};base64,{Convert.ToBase64String(ms.ToArray())}";
+
+        // Передаем файл в нашу базу данных
+        section.ImagePath = fileString;
+    }
+
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/sections");
+    }
+}
+
+

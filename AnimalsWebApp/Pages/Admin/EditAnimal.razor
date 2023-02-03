@@ -24,7 +24,7 @@ else
     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
         <button class="btn btn-danger" @onclick="OnCancel">Назад</button>
     </p>
-    <EditForm Model="animal" OnValidSubmit="OnValidSubmit" class="mx-1 mx-md-4">
+    <EditForm Model="animal" OnValidSubmit="OnValidSubmit" class="mx-1 mx-md-4" enctype="form-data">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
@@ -106,9 +106,8 @@ else
                                             <i class="fa-solid fa-camera-retro"></i>
                                             <label for="images">Вставить фотку</label>
                                             &nbsp;
-                                            @*<InputFile OnChange="OnFileChange" class="form-label"></InputFile>*@
                                          
-                                                <img src="@animal.ImagePath" class="imgForAnimals" />                                           
+                                              <img src="@animal.ImagePath" class="imgForAnimals" />                                           
 
                                             <InputFile id="uploadBox" OnChange="OnFileChange" class="form-label"></InputFile>
                                         </div>
@@ -116,7 +115,7 @@ else
 
 
                                     <div class="d-flex flex-row align-items-center mb-4">
-                                        <button class="btn btn-success" onclick="return validateInput()" type="submit">
+                                        <button class="btn btn-success" type="submit">
                                             <i class="fa-solid fa-share-from-square"></i> &nbsp;Сохранить редактирование
                                         </button>
                                     </div>
@@ -150,8 +149,8 @@ else
     public string AnimalId { get; set; }
     private Animal animal;
     private IEnumerable<Category> categories;
-  //  private string dayOfPublication = DateTime.Now.ToString("dd/MM/yyyy");
-    
+    //  private string dayOfPublication = DateTime.Now.ToString("dd/MM/yyyy");
+
 
     bool displayValidationErrorMessages = false;
     bool displayUserAddedToDB = false;
@@ -180,14 +179,13 @@ else
     protected override void OnInitialized()
     {
         base.OnInitialized();
-      //  dayOfPublication = DateTime.Now.ToString("dd/MM/yyyy");
+        //  dayOfPublication = DateTime.Now.ToString("dd/MM/yyyy");
         animal = new Animal();
         categories = ViewCategoriesUseCase.Execute();
     }
 
-    private async Task OnValidSubmit(EditContext context)
-    {
-        await JSRuntime.InvokeVoidAsync("validateInput", "error");
+    private void OnValidSubmit(EditContext context)
+    {            
         if (context.Validate())
         {           
             EditAnimalUseCase.Execute(this.animal);
@@ -212,18 +210,18 @@ else
         //var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
         //animal.ImagePath = imageData;
 
+       
+            // Так работает на УРА!
+            using MemoryStream ms = new();
+            var resized = await e.File.RequestImageFileAsync(e.File.ContentType, maxWidth: 500, maxHeight: 500);
+            using Stream fileStream = resized.OpenReadStream();
+            await fileStream.CopyToAsync(ms);
 
-        // Так работает на УРА!
-        using MemoryStream ms = new();
-        var resized = await e.File.RequestImageFileAsync(e.File.ContentType, maxWidth: 500, maxHeight: 500);
-        using Stream fileStream = resized.OpenReadStream();
-        await fileStream.CopyToAsync(ms);
+            // Получаем конечный запрашиваемый файл
+            var fileString = $"data:{e.File.ContentType};base64,{Convert.ToBase64String(ms.ToArray())}";
 
-        // Получаем конечный запрашиваемый файл
-        var fileString = $"data:{e.File.ContentType};base64,{Convert.ToBase64String(ms.ToArray())}";
-
-        // Передаем файл в нашу базу данных
-        animal.ImagePath = fileString;
+            // Передаем файл в нашу базу данных
+            animal.ImagePath = fileString;
     }
 
     private void OnCancel()
