@@ -10,7 +10,6 @@
 @inject IJSRuntime JSRuntime
 @inject IDeleteSectionUseCase DeleteSectionUseCase
 
-
 <h2 class="bgForOl" style="margin:10px;text-align:center;border-radius:5px;padding:8px;">Полезные статьи</h2>
 
 @if(sections == null)
@@ -22,17 +21,26 @@ else
    <div class="flexForImg">
         @foreach(var section in sections)
         {
-            <div class="flexForImg2">
+            <div class="flexForImg2">               
                 <div class="containerForAnimalsDescription">
-                    <h4 style="text-align:center;padding:5px">@(section.Title)</h4>
+                    <h4 style="text-align:center;font-size:18px;padding:5px;margin-top:5px;">@((MarkupString)section.Title)</h4>
+
+                    <CascadingAuthenticationState>
+                        <AuthorizeView Roles="Admin">
+                            <h3>День издания статьи: </h3>
+                            <h3 style="border:inset;border-color:red;">@(section.PublicDate.ToShortDateString())</h3>
+                        </AuthorizeView>
+                    </CascadingAuthenticationState>
+
                     <button class="btn btn-success" @onclick="@(() => OnInfoSection(section))" style="margin:0 5px 15px 0">Подробнее</button>
                      <CascadingAuthenticationState>
                     <AuthorizeView Roles="Admin">
                             <button class="btn btn-danger" @onclick="@(() => OnDeleteSection(section.SectionId))" style="margin:0 5px 15px 0">Удалить</button>
                             <button class="btn btn-info" @onclick="@(() => OnEditSection(section))" style="margin:0 0 15px 0">Редактировать</button>
                         </AuthorizeView>
-                    </CascadingAuthenticationState>
+                    </CascadingAuthenticationState>                 
                 </div>
+                
                 <img src="@(section.ImagePath)" class="imgForAnimals" />
             </div>
         }

@@ -7,6 +7,9 @@
 @inject ISectionRepository SectionRepository
 
 <h2 class="bgForOl" style="margin:10px;text-align:center;border-radius:5px;padding:8px;">@((MarkupString)section.Title)</h2>
+<div class="center" style="text-align:center;margin-bottom:10px;">
+    <button class="btn btn-danger" @onclick="OnBack" >Назад</button>
+</div>
 <img src="@(section.ImagePath)" alt="" class="imgForAnimals center" />
 <br />
 <div class="center">@((MarkupString)section.MainText)</div>
@@ -23,5 +26,10 @@
         base.OnInitialized();
 
         section = SectionRepository.GetSection(SectionId);
+    }
+
+    private void OnBack()
+    {
+        NavigationManager.NavigateTo("/sections");
     }
 }

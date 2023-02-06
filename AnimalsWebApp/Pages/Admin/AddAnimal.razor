@@ -193,7 +193,7 @@ else
 
         // Так работает на УРА!
         using MemoryStream ms = new();
-        var resized = await e.File.RequestImageFileAsync(e.File.ContentType, maxWidth: 500, maxHeight: 500);
+        var resized = await e.File.RequestImageFileAsync(e.File.ContentType, maxWidth: 400, maxHeight: 400);
         using Stream fileStream = resized.OpenReadStream();
         await fileStream.CopyToAsync(ms);
 

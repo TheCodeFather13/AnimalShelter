@@ -19,8 +19,15 @@
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 35px;
-    margin: 50px 0 0 0;
+    gap: 20px;
+    margin:0 0 30px 0;
+}
+
+.flexForDropDown {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin: 0 0 20px 132px;
 }
 
 .line {
@@ -72,10 +79,9 @@ img {
 
 .containerForAnimalsDescription {
     color: white;
-    background-color: black;
-    font-family:Georgia;
-    text-align:center;
- 
+    background-color: #20454f;
+    font-family: Georgia;
+    text-align: center;
 }
 
 .center {
@@ -110,6 +116,13 @@ img {
 }
 
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+
+    .flexForDropDown {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 0 0 20px 0;
+    }
 
     table, thead, tbody, th, td, tr {
         display: block;
@@ -161,6 +174,13 @@ img {
 
         .buttons {
             margin: 10px 7px 0 2px;
+        }
+
+        .flexForDropDown {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 0 0 20px 0;
         }
     }
 
