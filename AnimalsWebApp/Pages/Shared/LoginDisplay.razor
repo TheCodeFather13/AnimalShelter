@@ -2,48 +2,58 @@
 @inject NavigationManager NavigationManager
 <link href="css/MyStyle.css" rel="stylesheet" />
 
-
 <Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
     <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
-        <Authorized>        
-            <div class="bc-login">
-                <ul class="navbar-nav login-position">
+        <Authorized>
 
-                    <li class="nav-item">
-                        <a href="/Identity/Account/Manage" class="btn btn-lg">Здравствуйте, @context.User.Identity.Name</a>
+            <div class="bc-login flex-end">
+                <ul class="login-position">
+                    <li class="flex-item">
+                        <span style="font-size:25px;color:#20454f;">
+                            Мы в соцсетях:
+                        </span>
+
+                        <a @onclick="OnGoToVk"><img src="css/Images/vk.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>
+                        <a @onclick="OnGoToFb"><img src="css/Images/fb.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>
                     </li>
 
-                    <li class="nav-item" style="margin-right:10px">
-                        <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
-                            <button type="submit" class="btn btn-danger">
+                    <li class="push-right">
+                        <a href="/Identity/Account/Manage" style="align-items:center;" class="btn btn-lg">Здравствуйте, @context.User.Identity.Name</a>
+
+                        <form  action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+                            <button style="align-items:center;margin-left:55px;" type="submit" class="btn btn-danger">
                                 <i class="fa-sharp fa-solid fa-door-open"></i>&nbsp;Выйти из профиля
                             </button>
                         </form>
                     </li>
-
                 </ul>
-            </div>
+            </div>     
         </Authorized>
         <NotAuthorized>
-           
-                <div class="bc-login">
-                    <ul class="navbar-nav login-position">
 
-                    <li class="nav-item" style="margin:10px">
-                        <a class="btn btn-primary" style="color:white;" href="Identity/Account/Register">
+            <div class="bc-login flex-end">
+                <ul class="login-position">
+
+                    <li class="flex-item">
+                        <span style="font-size:25px;color:#20454f;">
+                            Мы в соцсетях:
+                        </span>
+                                                
+                        <a @onclick="OnGoToVk"><img src="css/Images/vk.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>                                                
+                        <a @onclick="OnGoToFb"><img src="css/Images/fb.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>
+                    </li>       
+                           
+                <li class="push-right">
+                        <a class="btn btn-primary" style="color:white;align-items:center;margin:5px 5px 5px 5px;" href="Identity/Account/Register">
                             <i class="fa-solid fa-user-plus"></i> &nbsp;Зарегистрироваться
                         </a>
-                        </li>
 
-                    <li class="nav-item" style="margin:10px">
-                            <a class="btn btn-success" href="Identity/Account/Login">
+                        <a class="btn btn-success" style="align-items:center;" href="Identity/Account/Login">
                             <i class="fa-sharp fa-solid fa-door-open"></i> &nbsp;Войти
                         </a>
-                        </li>
-
-                    </ul>
-                </div>         
-           
+                    </li>
+                </ul>
+            </div>
         </NotAuthorized>
     </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
 </Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
@@ -52,5 +62,13 @@
 
 
 @code {
+    private void OnGoToVk()
+    {
+        NavigationManager.NavigateTo("https://vk.com/public218734015");
+    }
 
+    private void OnGoToFb()
+    {
+        NavigationManager.NavigateTo("https://www.facebook.com/groups/512168994356269");
+    }
 }
