@@ -9,6 +9,7 @@
 @inject IRemoveClientOrderUseCase RemoveClientOrderUseCase
 @inject IViewClientOrderUseCase ViewClientOrderUseCase
 @inject IGetAnimalByIdUseCase GetAnimalByIdUseCase
+@inject IViewAnimalsUseCase ViewAnimalsUseCase
 
 <table class="table table-bordered table-striped" style="width:100%">
     <thead>
@@ -22,8 +23,8 @@
     <tbody>
 
         @foreach (var clientOrder in clientOrders)
-        {
-            <tr>               
+        {           
+            <tr>                            
                 <td>@clientOrder.animalId</td>               
                 <td>@clientOrder.ClientOrderId</td>
                 <td>@clientOrder.Name</td>
@@ -41,7 +42,7 @@
 @code {
     private IEnumerable<ClientOrder>? clientOrders;   
 
-    private Animal animal;
+    private IEnumerable<Animal> animals;
 
     protected override void OnInitialized()
     {

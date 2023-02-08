@@ -23,5 +23,6 @@ namespace AnimalShelterCore
         public string Contacts { get; set; }
 
         public string animalId { get; set; }
+        public string AnimalImagePath { get; set; }
     }
 }

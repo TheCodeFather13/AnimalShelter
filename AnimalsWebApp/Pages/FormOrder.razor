@@ -30,23 +30,23 @@
                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <i class="fas fa-paw"></i>&nbsp;
                                     <div class="form-outline flex-fill mb-0">
-                                        <h4>Вы выбрали животное с ID : @this.AnimalId</h4>                                         
+                                        <h4>Вы выбрали животное с ID : @this.AnimalId</h4>                                          
                                     </div>
                                 </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="d-flex flex-row align-items-center mb-4">                                      
                                         <div class="form-outline flex-fill mb-0">
+                                        <i class="fa-solid fa-file-signature"></i>&nbsp;
                                             <label for="contacts" class="form-label">Ваше имя: </label>
                                             <Microsoft.AspNetCore.Components.Forms.InputText id="othername" @bind-Value="order.Name" class="form-control"></Microsoft.AspNetCore.Components.Forms.InputText>
                                         </div>
                                     </div>
 
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                <div class="d-flex flex-row align-items-center mb-4">                                   
                                     <div class="form-outline flex-fill mb-0">
+                                        <i class="fa-solid fa-address-book"></i>&nbsp;
                                         <label for="contacts" class="form-label">Ваши контакты: </label>
                                         <Microsoft.AspNetCore.Components.Forms.InputText id="othercontacts" @bind-Value="order.Contacts" class="form-control" placeholder="Телефон или почта"></Microsoft.AspNetCore.Components.Forms.InputText>
                                     </div>
@@ -54,7 +54,7 @@
 
 
                                     <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <i class="fas fa-cloud-upload-alt"></i>&nbsp;
                                         <button class="btn btn-success" type="submit">Отправить свои данные админу</button>                                       
                                     </div>                     
                             </div>
@@ -70,11 +70,8 @@
 @code {
     [Parameter]
     public string AnimalId { get; set; }
-
-    private Animal animal;
+    
     private ClientOrder order;
-   
-
 
     //private string GetId(string id)
     //{
@@ -96,6 +93,7 @@
         base.OnInitialized();
         order = new ClientOrder();     
         order.animalId = this.AnimalId;
+        //order.AnimalImagePath = this.animal.ImagePath;
     }
 
     //protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -105,8 +103,7 @@
     //}
 
     private void OnValidSubmit()
-    {
-        
+    {       
         AddClientOrderUseCase.AddClientOrder(order);
         NavigationManager.NavigateTo("/");
     }

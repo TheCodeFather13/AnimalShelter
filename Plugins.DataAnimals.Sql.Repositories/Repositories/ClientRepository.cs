@@ -77,6 +77,8 @@ namespace Plugins.DataAnimals.Sql.Repositories.Repositories
                 clientOrderToUpdate.ClientOrderId = clientOrder.ClientOrderId;
                 clientOrderToUpdate.Name = clientOrder.Name;
                 clientOrderToUpdate.Contacts = clientOrder.Contacts;
+                clientOrderToUpdate.animalId = clientOrder.animalId;
+                clientOrderToUpdate.AnimalImagePath = clientOrder.AnimalImagePath;
                 _animalShelterDbContext.SaveChanges();
             }
             catch (Exception)

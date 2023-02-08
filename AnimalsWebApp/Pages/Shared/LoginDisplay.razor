@@ -9,19 +9,21 @@
             <div class="bc-login flex-end">
                 <ul class="login-position">
                     <li class="flex-item">
-                        <span style="font-size:25px;color:#20454f;">
+                        <span style="font-size:25px;color:#20454f;margin-left: 10px;">
                             Мы в соцсетях:
                         </span>
 
-                        <a @onclick="OnGoToVk"><img src="css/Images/vk.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>
-                        <a @onclick="OnGoToFb"><img src="css/Images/fb.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>
+                        <a @onclick="OnGoToVk"><img src="css/Images/vk.png" alt="picture" class="imgSocialNetwork" /></a>
+                        <a @onclick="OnGoToFb"><img src="css/Images/fb.png" alt="picture" class="imgSocialNetwork" /></a>
                     </li>
 
                     <li class="push-right">
-                        <a href="/Identity/Account/Manage" style="align-items:center;" class="btn btn-lg">Здравствуйте, @context.User.Identity.Name</a>
+                        <a href="/Identity/Account/Manage" class="btn btn-lg">Здравствуйте, @context.User.Identity.Name</a>   
+                    </li>
 
-                        <form  action="/Identity/Account/Logout?returnUrl=%2F" method="post">
-                            <button style="align-items:center;margin-left:55px;" type="submit" class="btn btn-danger">
+                    <li class="flex-item">
+                        <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+                            <button style="align-items:center;" type="submit" class="btn btn-danger">
                                 <i class="fa-sharp fa-solid fa-door-open"></i>&nbsp;Выйти из профиля
                             </button>
                         </form>
@@ -35,16 +37,16 @@
                 <ul class="login-position">
 
                     <li class="flex-item">
-                        <span style="font-size:25px;color:#20454f;">
+                        <span style="font-size:25px;color:#20454f;margin-left: 10px;" >
                             Мы в соцсетях:
                         </span>
                                                 
-                        <a @onclick="OnGoToVk"><img src="css/Images/vk.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>                                                
-                        <a @onclick="OnGoToFb"><img src="css/Images/fb.png" alt="picture" class="imgIcons" style="align-items:center;margin:5px;" /></a>
+                        <a @onclick="OnGoToVk"><img src="css/Images/vk.png" alt="picture" class="imgSocialNetwork" /></a>
+                        <a @onclick="OnGoToFb"><img src="css/Images/fb.png" alt="picture" class="imgSocialNetwork" /></a>
                     </li>       
                            
                 <li class="push-right">
-                        <a class="btn btn-primary" style="color:white;align-items:center;margin:5px 5px 5px 5px;" href="Identity/Account/Register">
+                        <a class="btn btn-primary" style="color:white;align-items:center;" href="Identity/Account/Register">
                             <i class="fa-solid fa-user-plus"></i> &nbsp;Зарегистрироваться
                         </a>
 
